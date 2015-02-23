@@ -1,4 +1,4 @@
-KK_mt6589_ACER V370
+KK_mt6589_FLY IQ446
 ===============
 
 kernel:
