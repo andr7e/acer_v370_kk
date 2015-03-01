@@ -22,10 +22,6 @@ sysclktz 0
 loglevel 5
     write /proc/bootprof "INIT: on init start"
 
-#lirenqi add for load cache in factory mode
-mkdir /cache 0770 system cache
-
-
 # setup the global environment
     export PATH /sbin:/vendor/bin:/system/sbin:/system/bin:/system/xbin
     export LD_LIBRARY_PATH /vendor/lib:/system/lib
@@ -258,10 +254,6 @@ on post-fs
 
 on boot
     start drvbd
-
-#lirenqi add for adb reboot
-on property:sys.powerctl=*
-    powerctl ${sys.powerctl}
 
 # basic network init
     ifup lo

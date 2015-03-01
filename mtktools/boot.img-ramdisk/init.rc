@@ -474,7 +474,6 @@ on post-fs-data
     chmod 0660 /dev/msensor
     chmod 0660 /dev/gsensor
     chmod 0660 /dev/als_ps
-    chmod 0660 /dev/als_ps
     chmod 0660 /dev/gyroscope
 
     chmod 0660 /sys/devices/platform/msensor/driver/cpsopmode
@@ -484,19 +483,8 @@ on post-fs-data
     chown system system /dev/hwmsensor
     chown system system /dev/msensor
     chown system system /dev/gsensor
-    chown system system /dev/als_ps
+    chown radio system /dev/als_ps
     chown system system /dev/gyroscope
-    
-    # for CIT Dual Speaker test.
-#	chmod 0660 /dev/eac
-	
-	# for msensor(st480)
-	chmod 0660 /dev/senodia_aot
-	chmod 0660 /dev/senodia_dev
-	chown system system /dev/senodia_dev
-	chown system system /dev/senodia_aot    
-
-	chmod 0775 /system/bin/af7133d
 
     #Accdet
     chown root radio /sys/devices/platform/Accdet_Driver/driver/accdet_call_state
@@ -638,8 +626,8 @@ on post-fs-data
     chmod 0660 /dev/kd_camera_flashlight
     chmod 0660 /dev/kd_camera_hw_bus2
     chmod 0660 /dev/FM50AF
-    chmod 0660 /dev/OV8825AF
     chmod 0660 /dev/CAM_CAL_DRV
+
 
     chown system camera /dev/camera-sysram
     chown system camera /dev/camera-isp
@@ -648,7 +636,6 @@ on post-fs-data
     chown system camera /dev/kd_camera_flashlight
     chown system camera /dev/kd_camera_hw_bus2
     chown system camera /dev/FM50AF
-    chown system camera /dev/OV8825AF
     chown system camera /dev/CAM_CAL_DRV
 
 
@@ -765,12 +752,6 @@ on boot
     chown system system /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
     chmod 0660 /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
 
-    chown system system /sys/devices/platform/mtk-tpd/driver/tpd_ges_en
-    chmod 0660 system /sys/devices/platform/mtk-tpd/driver/tpd_ges_en
-
-    chown system system /sys/devices/platform/mtk-kpd/driver/kpd_slid_state
-    chmod 0660 system /sys/devices/platform/mtk-kpd/driver/kpd_slid_state
-
     chmod 0664 /sys/class/leds/lcd-backlight/brightness
     chown system system /sys/class/timed_output/vibrator/enable
     chown system system /sys/class/leds/keyboard-backlight/brightness
@@ -812,9 +793,6 @@ on boot
 
 # AGPS
     mkdir /data/agps_supl 0771 gps system
-
-# NFC
-    mkdir /data/nfc_socket 0771 nfc radio
 
 ## Thermal
   #change permissions on thermal devices
@@ -863,25 +841,15 @@ on boot
     chown system /dev/ttyGS0 
     chmod 660 /dev/ttyGS1 
     chown system /dev/ttyGS1 
-
-# change owner for CIT testing.
-    chown radio system /dev/gsensor
-    chown radio system /dev/gyroscope
-    chown radio system /dev/als_ps
-#    chown radio system /dev/eac
-#    chown radio system /sys/class/leds/red/brightness
-#    chown radio system /sys/class/leds/blue/brightness
-#    chown radio system /sys/class/leds/green/brightness
-
 # Define TCP buffer sizes for various networks
 #   ReadMin, ReadInitial, ReadMax, WriteMin, WriteInitial, WriteMax,
     setprop net.tcp.buffersize.default 4096,87380,110208,4096,16384,110208
     setprop net.tcp.buffersize.wifi    524288,1048576,2097152,262144,524288,1048576
     setprop net.tcp.buffersize.lte     524288,1048576,2097152,262144,524288,1048576
     setprop net.tcp.buffersize.umts    4094,87380,110208,4096,16384,110208
-    setprop net.tcp.buffersize.hspa    4094,87380,1220608,4096,16384,1220608
-    setprop net.tcp.buffersize.hsupa   4094,87380,1220608,4096,16384,1220608
-    setprop net.tcp.buffersize.hsdpa   4094,87380,1220608,4096,16384,1220608
+    setprop net.tcp.buffersize.hspa    4094,87380,262144,4096,16384,262144
+    setprop net.tcp.buffersize.hsupa   4094,87380,262144,4096,16384,262144
+    setprop net.tcp.buffersize.hsdpa   4094,87380,262144,4096,16384,262144
     setprop net.tcp.buffersize.hspap   4094,87380,1220608,4096,16384,1220608
     setprop net.tcp.buffersize.edge    4093,26280,35040,4096,16384,35040
     setprop net.tcp.buffersize.gprs    4092,8760,11680,4096,8760,11680
@@ -1003,11 +971,11 @@ service debuggerd /system/bin/debuggerd
 service mobile_log_d /system/bin/mobile_log_d
     class main
 
-service bugreport /system/bin/dumpstate -d -p -B \
-        -o /data/data/com.android.shell/files/bugreports/bugreport
-    class main
-    disabled
-    oneshot
+# bugreport is triggered by ctl.start bugreport
+service bugreport /system/bin/bugmailer.sh -v
+	class main
+	disabled
+	oneshot
 
 # SGX init
 service pvrsrvctl /system/vendor/bin/pvrsrvctl --no-module --start
@@ -1248,13 +1216,9 @@ service drm /system/bin/drmserver
     user drm
     group drm system audio sdcard_rw net_raw inet drmrpc media sdcard_r media_rw
 
-# set service init.d
 service sysinit /system/bin/logwrapper /system/xbin/busybox run-parts /system/etc/init.d
-    user root
+    disabled
     oneshot
-
-on property:sys.init.d=on
-    start sysinit
 
 service media /system/bin/mediaserver
     class main
@@ -1449,18 +1413,6 @@ service akmd8975 /system/bin/akmd8975
     user system
     group system
     class main
-service af7133d /system/bin/af7133d
-    disabled
-    oneshot
-    user system
-    group system
-
-# senodiad(st480)
-service senodiad /system/bin/senodiad
-    class main
-    user system
-    group system
-    oneshot
 
 service akmd8963 /system/bin/akmd8963
     disabled
@@ -1573,6 +1525,12 @@ service backuprestore /system/bin/br_app_data_service
 	socket backuprestore stream 0660 root sdcard_rw
 	user root
 
+#Open NFC server
+service server_open_nfc /system/bin/server_open_nfc
+    class main
+    user root
+    group root
+
 #add for power-off alarm
 service poad /system/bin/poad
     user system
@@ -1583,19 +1541,3 @@ service MtkCodecService /system/bin/MtkCodecService
     class main
     user root
     group audio media sdcard_r
-
-#lirenqi 20140423 add for acer sn and snid 
-service initserialno /system/xbin/initserialno
-	user root
-	oneshot
-	disabled
-
-#maliyan add for ps_cail
-service pscali /system/xbin/pscali
-        user root
-        oneshot
-        disabled
-
-on property:nvram_init=Ready
-        start initserialno
-        start pscali
