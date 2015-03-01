@@ -33,12 +33,13 @@
  * applicable license agreements with MediaTek Inc.
  */
 #include <linux/types.h>
+
+#include <cust_acc.h>
+
 #include <mach/mt_pm_ldo.h>
-#include <cust_gyro.h>
 
 /*---------------------------------------------------------------------------*/
-/*
-int cust_gyro_power(struct gyro_hw *hw, unsigned int on, char* devname)
+int lis3dh_cust_acc_power(struct acc_hw *hw, unsigned int on, char* devname)
 {
     if (hw->power_id == MT65XX_POWER_NONE)
         return 0;
@@ -47,19 +48,17 @@ int cust_gyro_power(struct gyro_hw *hw, unsigned int on, char* devname)
     else
         return hwPowerDown(hw->power_id, devname); 
 }
-*/
 /*---------------------------------------------------------------------------*/
-static struct gyro_hw cust_gyro_hw = {
-    .addr = 0xd0,
+static struct acc_hw lis3dh_cust_acc_hw = {
     .i2c_num = 3,
-    .direction = 1,
-    .power_id = MT65XX_POWER_NONE,  /*!< LDO is not used */
-    .power_vol= VOL_DEFAULT,        /*!< LDO is not used */
+    .direction = 4,    
+    .power_id = MT65XX_POWER_LDO_VGP5,  /*!< LDO is not used */
+    .power_vol= VOL_2800,        /*!< LDO is not used */
     .firlen = 16,                   /*!< don't enable low pass fileter */
-    //.power = cust_gyro_power,
+    .power = lis3dh_cust_acc_power,        
 };
 /*---------------------------------------------------------------------------*/
-struct gyro_hw* get_cust_gyro_hw(void) 
+struct acc_hw* lis3dh_get_cust_acc_hw(void) 
 {
-    return &cust_gyro_hw;
+    return &lis3dh_cust_acc_hw;
 }
