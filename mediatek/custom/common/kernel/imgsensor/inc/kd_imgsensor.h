@@ -302,6 +302,9 @@
 #define SENSOR_DRVNAME_OV16825_MIPI_RAW   "ov16825mipiraw"
 #define SENSOR_DRVNAME_S5K4H5YX_2LANE_MIPI_RAW  "s5k4h5yx2lanemipiraw"
 #define SENSOR_DRVNAME_GC2235_RAW    	"gc2235raw"
+#define SENSOR_DRVNAME_IMX111_MIPI_RAW "imx111mipiraw"
+#define SENSOR_DRVNAME_GC2035MIPI_YUV "gc2035mipiyuv"
+#define SENSOR_DRVNAME_SOC5140_MIPI_YUV "soc5140mipiyuv"
 
 /*******************************************************************************
 *

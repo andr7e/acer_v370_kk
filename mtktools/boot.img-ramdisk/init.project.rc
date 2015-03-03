@@ -47,6 +47,9 @@ on post-fs-data
     chmod 0660 /dev/OV8826AF
     chown system camera /dev/OV8826AF
 
+    chmod 0660 /dev/FM50AF
+    chown system camera /dev/FM50AF
+
 # BT
     chmod 0660 /dev/stpbt
     chown bluetooth radio /dev/stpbt
