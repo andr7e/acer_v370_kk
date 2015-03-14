@@ -15,6 +15,8 @@ show_progress(0.1, 0);
 
 ui_print("| Setting permissions ...                  |");
 set_perm(0, 0, 0644, "/system/lib/libcameracustom.so");
+set_perm(0, 0, 0644, "/system/etc/permissions/android.hardware.sensor.gyroscope.xml");
+set_perm(0, 0, 0644, "/system/lib/hw/sensors.default.so");
 
 show_progress(0.1, 0);
 

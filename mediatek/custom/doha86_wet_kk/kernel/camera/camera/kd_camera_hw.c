@@ -1172,7 +1172,8 @@ else if(currSensorName && (0 == strcmp(SENSOR_DRVNAME_IMX111_MIPI_RAW,currSensor
 }
 #if 1
 //ov5648 works as sub cam
-else if(currSensorName && (0 == strcmp(SENSOR_DRVNAME_OV5648_MIPI_RAW,currSensorName))) // ||(0 == strcmp(SENSOR_DRVNAME_OV5650MIPI_RAW,currSensorName))))  //zhaoshaopeng for ov5647 20120524
+else if(currSensorName && (0 == strcmp(SENSOR_DRVNAME_OV5648_MIPI_RAW,currSensorName))) //|| (0 == strcmp(SENSOR_DRVNAME_OV9726_MIPI_RAW,currSensorName)))
+ // ||(0 == strcmp(SENSOR_DRVNAME_OV5650MIPI_RAW,currSensorName))))  //zhaoshaopeng for ov5647 20120524
 {
     //power ON
     if (On) {
@@ -1330,7 +1331,8 @@ else if(currSensorName && (0 == strcmp(SENSOR_DRVNAME_OV5648_MIPI_RAW,currSensor
 
 }
 #endif
-else if(currSensorName && (0 == strcmp(SENSOR_DRVNAME_OV5647MIPI_RAW,currSensorName))) // ||(0 == strcmp(SENSOR_DRVNAME_OV5650MIPI_RAW,currSensorName))))  //zhaoshaopeng for ov5647 20120524
+else if(currSensorName && (0 == strcmp(SENSOR_DRVNAME_OV5647MIPI_RAW,currSensorName)) || (0 == strcmp(SENSOR_DRVNAME_OV9726_MIPI_RAW,currSensorName)))
+// ||(0 == strcmp(SENSOR_DRVNAME_OV5650MIPI_RAW,currSensorName))))  //zhaoshaopeng for ov5647 20120524
 
 {
     //power ON
