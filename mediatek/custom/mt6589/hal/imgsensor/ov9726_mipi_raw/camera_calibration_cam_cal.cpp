@@ -57,15 +57,15 @@ UINT32 DoCamCalISPDynamicShadingLoad(INT32 CamcamFID, UINT32 start_addr, UINT32*
 UINT32 DoCamCalISPFixShadingLoad(INT32 CamcamFID, UINT32 start_addr, UINT32* pGetSensorCalData);
 UINT32 DoCamCalISPSensorShadingLoad(INT32 CamcamFID, UINT32 start_addr, UINT32* pGetSensorCalData);
 #else			
-static UINT32 DoCamCalModuleVersion(INT32 CamcamFID, UINT32 start_addr, UINT32 BlockSize,UINT32* pGetSensorCalData);
-static UINT32 DoCamCalPartNumber(INT32 CamcamFID, UINT32 start_addr, UINT32 BlockSize, UINT32* pGetSensorCalData);
+UINT32 DoCamCalModuleVersion(INT32 CamcamFID, UINT32 start_addr, UINT32 BlockSize,UINT32* pGetSensorCalData);
+UINT32 DoCamCalPartNumber(INT32 CamcamFID, UINT32 start_addr, UINT32 BlockSize, UINT32* pGetSensorCalData);
 //UINT32 DoCamCalShadingTable(INT32 CamcamFID, UINT32 start_addr, UINT32 BlockSize, UINT32* pGetSensorCalData);
-static UINT32 DoCamCalSingleLsc(INT32 CamcamFID, UINT32 start_addr, UINT32 BlockSize, UINT32* pGetSensorCalData);
-static UINT32 DoCamCalN3dLsc(INT32 CamcamFID, UINT32 start_addr, UINT32 BlockSize, UINT32* pGetSensorCalData);
-static UINT32 DoCamCalAWBGain(INT32 CamcamFID, UINT32 start_addr, UINT32 BlockSize, UINT32* pGetSensorCalData);
-static UINT32 DoCamCal2AGain(INT32 CamcamFID, UINT32 start_addr, UINT32 BlockSize, UINT32* pGetSensorCalData);
-static UINT32 DoCamCal3AGain(INT32 CamcamFID, UINT32 start_addr, UINT32 BlockSize, UINT32* pGetSensorCalData);
-static UINT32 DoCamCal3DGeo(INT32 CamcamFID, UINT32 start_addr, UINT32 BlockSize, UINT32* pGetSensorCalData);
+UINT32 DoCamCalSingleLsc(INT32 CamcamFID, UINT32 start_addr, UINT32 BlockSize, UINT32* pGetSensorCalData);
+UINT32 DoCamCalN3dLsc(INT32 CamcamFID, UINT32 start_addr, UINT32 BlockSize, UINT32* pGetSensorCalData);
+UINT32 DoCamCalAWBGain(INT32 CamcamFID, UINT32 start_addr, UINT32 BlockSize, UINT32* pGetSensorCalData);
+UINT32 DoCamCal2AGain(INT32 CamcamFID, UINT32 start_addr, UINT32 BlockSize, UINT32* pGetSensorCalData);
+UINT32 DoCamCal3AGain(INT32 CamcamFID, UINT32 start_addr, UINT32 BlockSize, UINT32* pGetSensorCalData);
+UINT32 DoCamCal3DGeo(INT32 CamcamFID, UINT32 start_addr, UINT32 BlockSize, UINT32* pGetSensorCalData);
 #endif ////seanlin 121016 for 658x 
 #if 0 ////seanlin 121016 for 658x 
 enum
@@ -263,7 +263,7 @@ static MINT32 dumpEnable=0;
 static CAM_CAL_LAYOUT_T  gIsInitedCamCal = CAM_CAL_LAYOUT_RTN_QUEUE;//(CAM_CAL_LAYOUT_T)CAM_CAL_LAYOUT_RTN_QUEUE;//seanlin 121017 why static? Because cam_cal_drv will get data one block by one block instead of overall in one time.
 //MUINT32 gIsInitedCamCal = CAM_CAL_LAYOUT_RTN_QUEUE;//(CAM_CAL_LAYOUT_T)CAM_CAL_LAYOUT_RTN_QUEUE;//seanlin 121017 why static? Because cam_cal_drv will get data one block by one block instead of overall in one time.
 
-static UINT32 ShowCmdErrorLog(CAMERA_CAM_CAL_TYPE_ENUM cmd)
+UINT32 ShowCmdErrorLog(CAMERA_CAM_CAL_TYPE_ENUM cmd)
 {
        CAM_CAL_ERR("Return ERROR %s\n",CamCalErrString[cmd]);
        return 0;
@@ -290,7 +290,7 @@ UINT32 DoReadDataByCmd(CAMERA_CAM_CAL_TYPE_ENUM Command, NT32 CamcamFID, UINT32 
     return err;
 }
 #endif //for test, no use currently
-static UINT32 DoCamCalModuleVersion(INT32 CamcamFID, UINT32 start_addr, UINT32 BlockSize,UINT32* pGetSensorCalData)
+UINT32 DoCamCalModuleVersion(INT32 CamcamFID, UINT32 start_addr, UINT32 BlockSize,UINT32* pGetSensorCalData)
 {
     PCAM_CAL_DATA_STRUCT pCamCalData = (PCAM_CAL_DATA_STRUCT)pGetSensorCalData;
     UINT32 err=  0;
@@ -314,7 +314,7 @@ static UINT32 DoCamCalModuleVersion(INT32 CamcamFID, UINT32 start_addr, UINT32 B
     return err;
 }
 
-static UINT32 DoCamCalPartNumber(INT32 CamcamFID, UINT32 start_addr, UINT32 BlockSize, UINT32* pGetSensorCalData)
+UINT32 DoCamCalPartNumber(INT32 CamcamFID, UINT32 start_addr, UINT32 BlockSize, UINT32* pGetSensorCalData)
 {
     stCAM_CAL_INFO_STRUCT  cam_calCfg;
     PCAM_CAL_DATA_STRUCT pCamCalData = (PCAM_CAL_DATA_STRUCT)pGetSensorCalData;
@@ -366,7 +366,7 @@ static UINT32 DoCamCalPartNumber(INT32 CamcamFID, UINT32 start_addr, UINT32 Bloc
     return err;
 }
 
-static UINT32 DoCamCalAWBGain(INT32 CamcamFID, UINT32 start_addr, UINT32 BlockSize, UINT32* pGetSensorCalData)
+UINT32 DoCamCalAWBGain(INT32 CamcamFID, UINT32 start_addr, UINT32 BlockSize, UINT32* pGetSensorCalData)
 {
     stCAM_CAL_INFO_STRUCT  cam_calCfg;
     PCAM_CAL_DATA_STRUCT pCamCalData = (PCAM_CAL_DATA_STRUCT)pGetSensorCalData;
@@ -483,7 +483,7 @@ static UINT32 DoCamCalAWBGain(INT32 CamcamFID, UINT32 start_addr, UINT32 BlockSi
 /********************************************************/
 //Please put your AWB+AF data funtion, here.
 /********************************************************/
-static UINT32 DoCamCal2AGain(INT32 CamcamFID, UINT32 start_addr, UINT32 BlockSize, UINT32* pGetSensorCalData)
+UINT32 DoCamCal2AGain(INT32 CamcamFID, UINT32 start_addr, UINT32 BlockSize, UINT32* pGetSensorCalData)
 {
 	stCAM_CAL_INFO_STRUCT  cam_calCfg;
     PCAM_CAL_DATA_STRUCT pCamCalData = (PCAM_CAL_DATA_STRUCT)pGetSensorCalData;
@@ -679,7 +679,7 @@ static UINT32 DoCamCal2AGain(INT32 CamcamFID, UINT32 start_addr, UINT32 BlockSiz
     }    
     return err;
 }
-static UINT32 DoCamCalSingleLsc(INT32 CamcamFID, UINT32 start_addr, UINT32 BlockSize, UINT32* pGetSensorCalData)
+UINT32 DoCamCalSingleLsc(INT32 CamcamFID, UINT32 start_addr, UINT32 BlockSize, UINT32* pGetSensorCalData)
 {
     stCAM_CAL_INFO_STRUCT  cam_calCfg;
     PCAM_CAL_DATA_STRUCT pCamCalData = (PCAM_CAL_DATA_STRUCT)pGetSensorCalData;
@@ -734,7 +734,7 @@ static UINT32 DoCamCalSingleLsc(INT32 CamcamFID, UINT32 start_addr, UINT32 Block
 //    err =  CamCalReturnErr[pCamCalData->Command];  //seanlin121121 wait for OTP put correct sensor LSC data 
     return err;	
 }
-static UINT32 DoCamCalN3dLsc(INT32 CamcamFID, UINT32 start_addr, UINT32 BlockSize, UINT32* pGetSensorCalData)
+UINT32 DoCamCalN3dLsc(INT32 CamcamFID, UINT32 start_addr, UINT32 BlockSize, UINT32* pGetSensorCalData)
 {
     stCAM_CAL_INFO_STRUCT  cam_calCfg;
     PCAM_CAL_DATA_STRUCT pCamCalData = (PCAM_CAL_DATA_STRUCT)pGetSensorCalData;
@@ -811,7 +811,7 @@ static UINT32 DoCamCalN3dLsc(INT32 CamcamFID, UINT32 start_addr, UINT32 BlockSiz
     return err;	
 }
 
-static UINT32 DoCamCal3AGain(INT32 CamcamFID, UINT32 start_addr, UINT32 BlockSize, UINT32* pGetSensorCalData)
+UINT32 DoCamCal3AGain(INT32 CamcamFID, UINT32 start_addr, UINT32 BlockSize, UINT32* pGetSensorCalData)
 {
     stCAM_CAL_INFO_STRUCT  cam_calCfg;
     PCAM_CAL_DATA_STRUCT pCamCalData = (PCAM_CAL_DATA_STRUCT)pGetSensorCalData;
@@ -878,7 +878,7 @@ static UINT32 DoCamCal3AGain(INT32 CamcamFID, UINT32 start_addr, UINT32 BlockSiz
     return err;
 }
 
-static UINT32 DoCamCal3DGeo(INT32 CamcamFID, UINT32 start_addr, UINT32 BlockSize, UINT32* pGetSensorCalData)
+UINT32 DoCamCal3DGeo(INT32 CamcamFID, UINT32 start_addr, UINT32 BlockSize, UINT32* pGetSensorCalData)
 {
     stCAM_CAL_INFO_STRUCT  cam_calCfg;
     PCAM_CAL_DATA_STRUCT pCamCalData = (PCAM_CAL_DATA_STRUCT)pGetSensorCalData;
@@ -950,7 +950,7 @@ static UINT32 DoCamCal3DGeo(INT32 CamcamFID, UINT32 start_addr, UINT32 BlockSize
 *In order to get data one block by one block instead of overall data in one time
 *It must extract FileID and LayoutType from CAM_CALGetCalData()
 *******************************************************************************/
-static UINT32 DoCamCalLayoutCheck(void)
+UINT32 DoCamCalLayoutCheck(void)
 {
     MINT32 lCamcamFID = -1;  //seanlin 121017 01 local for layout check
 
@@ -1029,7 +1029,7 @@ static UINT32 DoCamCalLayoutCheck(void)
 /******************************************************************************
 *
 *******************************************************************************/
-UINT32 ov9726_CAM_CALGetCalData(UINT32* pGetSensorCalData)
+UINT32 CAM_CALGetCalData(UINT32* pGetSensorCalData)
 {	
     UCHAR cBuf[128] = "/dev/";	
     UCHAR HeadID[5] = "NONE";	
@@ -1107,7 +1107,7 @@ UINT32 ov9726_CAM_CALGetCalData(UINT32* pGetSensorCalData)
 *In order to get data one block by one block instead of overall data in one time
 *It must add reset function if destory in cam cal drv instance
 *******************************************************************************/
-static UINT32 DoCamCalDataReset(INT32 CamcamFID, UINT32 start_addr, UINT32 BlockSize, UINT32* pGetSensorCalData)
+UINT32 DoCamCalDataReset(INT32 CamcamFID, UINT32 start_addr, UINT32 BlockSize, UINT32* pGetSensorCalData)
 {
     gIsInitedCamCal = CAM_CAL_LAYOUT_RTN_QUEUE;//seanlin 121017 why static? Because cam_cal_drv will get data one block by one block instead of overall in one time.
     LayoutType = (MAX_CALIBRATION_LAYOUT_NUM+1); //seanlin 121017 why static? Because cam_cal_drv will get data one block by one block instead of overall in one time.

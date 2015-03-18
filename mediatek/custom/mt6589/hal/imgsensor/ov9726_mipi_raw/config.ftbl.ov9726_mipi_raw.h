@@ -64,8 +64,7 @@ FTABLE_SCENE_INDEP()
         SCENE_AS_DEFAULT_SCENE(
             ITEM_AS_DEFAULT_("1280x960"), 
             ITEM_AS_VALUES_(
-                "320x240",    "480x272",    "640x352",    "640x480",    "1024x768",
-                "1280x720",   "1280x768",   "1280x960",   "1440x960",  
+                "320x240",      "640x480",      "1024x768",     "1280x720",  
                 
             )
         ), 
@@ -79,10 +78,9 @@ FTABLE_SCENE_INDEP()
         SCENE_AS_DEFAULT_SCENE(
             ITEM_AS_DEFAULT_("640x480"), 
             ITEM_AS_VALUES_(
-                "176x144",      "320x240",      "352x288",      "432x320",      "480x320",
-                "480x368",      "640x480",      "720x480",      "728x480",      "782x480",
-                "800x480",      "800x600",      "864x480",      "888x540",      "960x540",
-                "1184x720",     "1280x720",     "1828x1080",    "1920x1080", 
+                "176x144",      "320x240",      "352x288",      "480x320",      "480x368", 
+                "640x480",      "720x480",      "800x480",      "800x600",      "864x480", 
+                "960x540",      "1280x720", 
             )
         ), 
     )
@@ -160,19 +158,12 @@ FTABLE_SCENE_INDEP()
     )
 #endif
     //==========================================================================
-#if defined(MTK_VSS_SUPPORT)
+#if 1
     //  Video Snapshot
     FTABLE_CONFIG_AS_TYPE_OF_USER(
         KEY_AS_(MtkCameraParameters::KEY_VIDEO_SNAPSHOT_SUPPORTED), 
         SCENE_AS_DEFAULT_SCENE(
             ITEM_AS_DEFAULT_(MtkCameraParameters::TRUE), 
-        ), 
-    )
-#else
-    FTABLE_CONFIG_AS_TYPE_OF_USER(
-        KEY_AS_(MtkCameraParameters::KEY_VIDEO_SNAPSHOT_SUPPORTED), 
-        SCENE_AS_DEFAULT_SCENE(
-            ITEM_AS_DEFAULT_(MtkCameraParameters::FALSE), 
         ), 
     )
 #endif
@@ -212,21 +203,6 @@ FTABLE_SCENE_INDEP()
     //==========================================================================
 #if 1
     //  Zsd
-    
-if(facing == 1) //front sensor
-{    
-    FTABLE_CONFIG_AS_TYPE_OF_DEFAULT_VALUES(
-        KEY_AS_(MtkCameraParameters::KEY_ZSD_MODE), 
-        SCENE_AS_DEFAULT_SCENE(
-            ITEM_AS_DEFAULT_(MtkCameraParameters::OFF), 
-            ITEM_AS_VALUES_(
-                MtkCameraParameters::OFF
-            )
-        ), 
-    )
-}
-else
-{
     FTABLE_CONFIG_AS_TYPE_OF_DEFAULT_VALUES(
         KEY_AS_(MtkCameraParameters::KEY_ZSD_MODE), 
         SCENE_AS_DEFAULT_SCENE(
@@ -236,53 +212,26 @@ else
                 MtkCameraParameters::ON
             )
         ), 
-    )    
-}
+    )
 #endif
     //==========================================================================
 #if 1
     //  (Shot) Capture Mode
-if(facing == 1) //front sensor
-{
     FTABLE_CONFIG_AS_TYPE_OF_DEFAULT_VALUES(
         KEY_AS_(MtkCameraParameters::KEY_CAPTURE_MODE), 
         SCENE_AS_DEFAULT_SCENE(
             ITEM_AS_DEFAULT_(MtkCameraParameters::CAPTURE_MODE_NORMAL), 
             ITEM_AS_VALUES_(
                 MtkCameraParameters::CAPTURE_MODE_NORMAL, 
-#ifdef MTK_FACEBEAUTY_SUPPORT 
-                MtkCameraParameters::CAPTURE_MODE_FACE_BEAUTY,
-#endif
-                MtkCameraParameters::CAPTURE_MODE_SMILE_SHOT, 
-                MtkCameraParameters::CAPTURE_MODE_AUTO_PANORAMA_SHOT,
-                MtkCameraParameters::CAPTURE_MODE_MAV_SHOT, 
-                MtkCameraParameters::CAPTURE_MODE_ASD_SHOT, 
-            )
-        ), 
-    )
-}
-else
-{
-    FTABLE_CONFIG_AS_TYPE_OF_DEFAULT_VALUES(
-        KEY_AS_(MtkCameraParameters::KEY_CAPTURE_MODE), 
-        SCENE_AS_DEFAULT_SCENE(
-            ITEM_AS_DEFAULT_(MtkCameraParameters::CAPTURE_MODE_NORMAL), 
-            ITEM_AS_VALUES_(
-                MtkCameraParameters::CAPTURE_MODE_NORMAL, 
-#ifdef MTK_FACEBEAUTY_SUPPORT 
                 MtkCameraParameters::CAPTURE_MODE_FACE_BEAUTY, 
-#endif
                 MtkCameraParameters::CAPTURE_MODE_CONTINUOUS_SHOT, 
                 MtkCameraParameters::CAPTURE_MODE_SMILE_SHOT, 
                 MtkCameraParameters::CAPTURE_MODE_BEST_SHOT, 
                 MtkCameraParameters::CAPTURE_MODE_EV_BRACKET_SHOT, 
-                MtkCameraParameters::CAPTURE_MODE_AUTO_PANORAMA_SHOT,
-                MtkCameraParameters::CAPTURE_MODE_MAV_SHOT, 
-                MtkCameraParameters::CAPTURE_MODE_ASD_SHOT, 
+                MtkCameraParameters::CAPTURE_MODE_AUTO_PANORAMA_SHOT, 
             )
         ), 
     )
-}
 #endif
     //==========================================================================
 #if 0
@@ -312,9 +261,14 @@ FTABLE_SCENE_DEP()
     FTABLE_CONFIG_AS_TYPE_OF_DEFAULT_VALUES(
         KEY_AS_(MtkCameraParameters::KEY_FOCUS_MODE), 
         SCENE_AS_DEFAULT_SCENE(
-            ITEM_AS_DEFAULT_(MtkCameraParameters::FOCUS_MODE_INFINITY), 
+            ITEM_AS_DEFAULT_(MtkCameraParameters::FOCUS_MODE_AUTO), 
             ITEM_AS_VALUES_(
-                MtkCameraParameters::FOCUS_MODE_INFINITY,
+                MtkCameraParameters::FOCUS_MODE_AUTO,   
+                MtkCameraParameters::FOCUS_MODE_MACRO, 
+                MtkCameraParameters::FOCUS_MODE_INFINITY, 
+                MtkCameraParameters::FOCUS_MODE_CONTINUOUS_PICTURE, 
+                MtkCameraParameters::FOCUS_MODE_CONTINUOUS_VIDEO, 
+                "manual",   "fullscan", 
             )
         ), 
         //......................................................................

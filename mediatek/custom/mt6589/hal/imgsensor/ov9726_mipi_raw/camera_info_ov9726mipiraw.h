@@ -9,7 +9,6 @@
 #define INCLUDE_FILENAME_ISP_REGS_PARAM     "camera_isp_regs_ov9726mipiraw.h"
 #define INCLUDE_FILENAME_ISP_PCA_PARAM      "camera_isp_pca_ov9726mipiraw.h"
 #define INCLUDE_FILENAME_ISP_LSC_PARAM      "camera_isp_lsc_ov9726mipiraw.h"
-#define INCLUDE_FILENAME_FLASH_AWB_CALIBRATION_DATA "camera_flash_awb_calibration_data_ov9726mipiraw.h"
 /*******************************************************************************
 *
 ********************************************************************************/

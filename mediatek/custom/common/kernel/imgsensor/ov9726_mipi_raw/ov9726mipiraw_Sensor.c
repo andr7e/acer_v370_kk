@@ -1412,7 +1412,7 @@ UINT32 OV9726MIPIFeatureControl(MSDK_SENSOR_FEATURE_ENUM FeatureId,
 	MSDK_SENSOR_REG_INFO_STRUCT *pSensorRegData=(MSDK_SENSOR_REG_INFO_STRUCT *) pFeaturePara;
 	
 
-	SENSORDB("OV9726MIPIFeatureControl£¬FeatureId:%d\n",FeatureId);
+	SENSORDB("OV9726MIPIFeatureControl_FeatureId:%d\n",FeatureId);
 		
 	switch (FeatureId)
 	{

@@ -9,7 +9,6 @@
 #include "camera_AE_PLineTable_ov9726mipiraw.h"
 #include "camera_info_ov9726mipiraw.h"
 #include "camera_custom_AEPlinetable.h"
-#include "flash_awb_param.h"
 
 const NVRAM_CAMERA_ISP_PARAM_STRUCT CAMERA_ISP_DEFAULT_VALUE =
 {{
@@ -92,7 +91,7 @@ const NVRAM_CAMERA_3A_STRUCT CAMERA_3A_NVRAM_DEFAULT_VALUE =
         {
             1152,    // u4MinGain, 1024 base = 1x
             15872,    // u4MaxGain, 16x
-            82,    // u4MiniISOGain, ISOxx  
+            159,    // u4MiniISOGain, ISOxx  
             64,    // u4GainStepUnit, 1x/8 
             39620,    // u4PreExpUnit 
             30,    // u4PreMaxFrameRate
@@ -108,14 +107,14 @@ const NVRAM_CAMERA_3A_STRUCT CAMERA_3A_NVRAM_DEFAULT_VALUE =
 	},
          // rHistConfig
         {
-            4, // 2,   // u4HistHighThres
+            2,   // u4HistHighThres
             40,  // u4HistLowThres
             2,   // u4MostBrightRatio
             1,   // u4MostDarkRatio
             160, // u4CentralHighBound
             20,  // u4CentralLowBound
             {240, 230, 220, 210, 200}, // u4OverExpThres[AE_CCT_STRENGTH_NUM]
-            {82, 108, 128, 148, 170},  // u4HistStretchThres[AE_CCT_STRENGTH_NUM]
+            {86, 108, 128, 148, 170},  // u4HistStretchThres[AE_CCT_STRENGTH_NUM]
             {18, 22, 26, 30, 34}       // u4BlackLightThres[AE_CCT_STRENGTH_NUM]
         },
         // rCCTConfig
@@ -124,9 +123,9 @@ const NVRAM_CAMERA_3A_STRUCT CAMERA_3A_NVRAM_DEFAULT_VALUE =
             TRUE,            // bEnableHistStretch
             FALSE,           // bEnableAntiOverExposure
             TRUE,            // bEnableTimeLPF
-            TRUE,            // bEnableCaptureThres
-            TRUE,            // bEnableVideoThres
-            TRUE,            // bEnableStrobeThres
+            FALSE,            // bEnableCaptureThres
+            FALSE,            // bEnableVideoThres
+            FALSE,            // bEnableStrobeThres
             47,                // u4AETarget
             47,                // u4StrobeAETarget
 
@@ -135,22 +134,22 @@ const NVRAM_CAMERA_3A_STRUCT CAMERA_3A_NVRAM_DEFAULT_VALUE =
             32,                // u4HistStretchWeight
             4,                 // u4AntiOverExpWeight
             2,                 // u4BlackLightStrengthIndex
-            0, // 2,                 // u4HistStretchStrengthIndex
+            2,                 // u4HistStretchStrengthIndex
             2,                 // u4AntiOverExpStrengthIndex
             2,                 // u4TimeLPFStrengthIndex
             {1, 3, 5, 7, 8}, // u4LPFConvergeTable[AE_CCT_STRENGTH_NUM]
             90,                // u4InDoorEV = 9.0, 10 base
-            -12,               // i4BVOffset delta BV = -2.3
-            64,                 // u4PreviewFlareOffset
-            64,                 // u4CaptureFlareOffset
-            1,                 // u4CaptureFlareThres
-            64,                 // u4VideoFlareOffset
-            1,                 // u4VideoFlareThres
-            32,                 // u4StrobeFlareOffset
-            1,                 // u4StrobeFlareThres
-            160,                 // u4PrvMaxFlareThres
+            -10,               // i4BVOffset delta BV = -2.3
+            4,                 // u4PreviewFlareOffset
+            4,                 // u4CaptureFlareOffset
+            5,                 // u4CaptureFlareThres
+            4,                 // u4VideoFlareOffset
+            5,                 // u4VideoFlareThres
+            2,                 // u4StrobeFlareOffset
+            2,                 // u4StrobeFlareThres
+            8,                 // u4PrvMaxFlareThres
             0,                 // u4PrvMinFlareThres
-            160,                 // u4VideoMaxFlareThres
+            8,                 // u4VideoMaxFlareThres
             0,                 // u4VideoMinFlareThres            
             18,                // u4FlatnessThres              // 10 base for flatness condition.
             75                 // u4FlatnessStrength
@@ -387,10 +386,10 @@ const NVRAM_CAMERA_3A_STRUCT CAMERA_3A_NVRAM_DEFAULT_VALUE =
             },
             // Daylight Fluorescent
             {
-            148,    // i4RightBound
-            -79,    // i4LeftBound
-            -346,    // i4UpperBound
-            -440    // i4LowerBound
+            0,    // i4RightBound
+            0,    // i4LeftBound
+            0,    // i4UpperBound
+            0    // i4LowerBound
             }
         },
         // PWB light area
@@ -605,11 +604,6 @@ const NVRAM_CAMERA_3A_STRUCT CAMERA_3A_NVRAM_DEFAULT_VALUE =
 #include INCLUDE_FILENAME_ISP_LSC_PARAM
 //};  //  namespace
 
-const FLASH_AWB_CALIBRATION_DATA_STRUCT CAMERA_FLASH_AWB_CALIBRATION_DATA =
-{
-    #include INCLUDE_FILENAME_FLASH_AWB_CALIBRATION_DATA
-};
-
 
 typedef NSFeature::RAWSensorInfo<SENSOR_ID> SensorInfoSingleton_T;
 
@@ -624,12 +618,9 @@ impGetDefaultData(CAMERA_DATA_TYPE_ENUM const CameraDataType, VOID*const pDataBu
                                              sizeof(NVRAM_CAMERA_3A_STRUCT),
                                              sizeof(NVRAM_CAMERA_SHADING_STRUCT),
                                              sizeof(NVRAM_LENS_PARA_STRUCT),
-                                             sizeof(AE_PLINETABLE_T),
-                                             0,
-                                             sizeof(CAMERA_TSF_TBL_STRUCT),
-                                             sizeof(FLASH_AWB_CALIBRATION_DATA_STRUCT)};
+                                             sizeof(AE_PLINETABLE_T)};
 
-    if (CameraDataType > CAMERA_DATA_FLASH_AWB_CALIBRATION_DATA || NULL == pDataBuf || (size < dataSize[CameraDataType]))
+    if (CameraDataType > CAMERA_DATA_AE_PLINETABLE || NULL == pDataBuf || (size < dataSize[CameraDataType]))
     {
         return 1;
     }
@@ -648,11 +639,8 @@ impGetDefaultData(CAMERA_DATA_TYPE_ENUM const CameraDataType, VOID*const pDataBu
         case CAMERA_DATA_AE_PLINETABLE:
             memcpy(pDataBuf,&g_PlineTableMapping,sizeof(AE_PLINETABLE_T));
             break;
-        case CAMERA_DATA_FLASH_AWB_CALIBRATION_DATA:
-            memcpy(pDataBuf,&CAMERA_FLASH_AWB_CALIBRATION_DATA,sizeof(FLASH_AWB_CALIBRATION_DATA_STRUCT));
-            break;            
         default:
-            return 1;
+            break;
     }
     return 0;
 }};  //  NSFeature
