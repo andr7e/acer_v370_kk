@@ -84,6 +84,44 @@ static struct early_suspend mt_cpufreq_early_suspend_handler =
 #define DVFS_V3     (1050)  // mV
 #define DVFS_V4     ( 950)  // mV
 
+/**************************************************
+* enable undervolt
+***************************************************/
+#define MT_UNDERVOLT
+
+/* 700 + n  * 6.25mv */
+#define MT_1V28125  0x5D
+#define MT_1V25     0x58
+#define MT_1V20     0x50
+#define MT_1V15     0x48
+#define MT_1V11250  0x42
+#define MT_1V02500  0x34
+#define MT_1V05     0x38
+#define MT_0V95     0x28
+#define MT_0V93750  0x26
+#define MT_0V85     0x18
+#define MT_0V83750  0x16
+
+#ifndef MT_UNDERVOLT
+#define MT_CPUVOLT_REG_0 MT_1V20
+#define MT_CPUVOLT_REG_1 MT_1V15
+#define MT_CPUVOLT_REG_2 MT_1V05
+#define MT_CPUVOLT_REG_3 MT_0V95
+#define MT_CPUVOLT_REG_4 MT_0V85
+#define MT_CPUVOLT_REG_5 MT_1V05
+#define MT_CPUVOLT_REG_6 MT_0V95
+#define MT_CPUVOLT_REG_7 MT_0V85
+#else
+#define MT_CPUVOLT_REG_0 MT_1V15
+#define MT_CPUVOLT_REG_1 MT_1V11250
+#define MT_CPUVOLT_REG_2 MT_1V02500
+#define MT_CPUVOLT_REG_3 MT_0V93750
+#define MT_CPUVOLT_REG_4 MT_0V83750
+#define MT_CPUVOLT_REG_5 MT_1V02500
+#define MT_CPUVOLT_REG_6 MT_0V93750
+#define MT_CPUVOLT_REG_7 MT_0V83750
+#endif
+
 /*****************************************
 * PMIC settle time, should not be changed
 ******************************************/
@@ -1291,18 +1329,18 @@ void mt_cpufreq_return_default_DVS_by_ptpod(void)
 {
     if(g_cpufreq_get_ptp_level == 0)
     {
-        mt65xx_reg_sync_writel(0x50, PMIC_WRAP_DVFS_WDATA0); // 1.20V VPROC
-        mt65xx_reg_sync_writel(0x48, PMIC_WRAP_DVFS_WDATA1); // 1.15V VPROC
-        mt65xx_reg_sync_writel(0x38, PMIC_WRAP_DVFS_WDATA2); // 1.05V VPROC
-        mt65xx_reg_sync_writel(0x28, PMIC_WRAP_DVFS_WDATA3); // 0.95V VPROC
-        mt65xx_reg_sync_writel(0x18, PMIC_WRAP_DVFS_WDATA4); // 0.85V VPROC
+        mt65xx_reg_sync_writel(MT_CPUVOLT_REG_0, PMIC_WRAP_DVFS_WDATA0); // 1.20V VPROC
+        mt65xx_reg_sync_writel(MT_CPUVOLT_REG_1, PMIC_WRAP_DVFS_WDATA1); // 1.15V VPROC
+        mt65xx_reg_sync_writel(MT_CPUVOLT_REG_2, PMIC_WRAP_DVFS_WDATA2); // 1.05V VPROC
+        mt65xx_reg_sync_writel(MT_CPUVOLT_REG_3, PMIC_WRAP_DVFS_WDATA3); // 0.95V VPROC
+        mt65xx_reg_sync_writel(MT_CPUVOLT_REG_4, PMIC_WRAP_DVFS_WDATA4); // 0.85V VPROC
 
         /* For PTP-OD */
-        mt_cpufreq_pmic_volt[0] = 0x50;
-        mt_cpufreq_pmic_volt[1] = 0x48;
-        mt_cpufreq_pmic_volt[2] = 0x38;
-        mt_cpufreq_pmic_volt[3] = 0x28;
-        mt_cpufreq_pmic_volt[4] = 0x18;
+        mt_cpufreq_pmic_volt[0] = MT_CPUVOLT_REG_0;
+        mt_cpufreq_pmic_volt[1] = MT_CPUVOLT_REG_1;
+        mt_cpufreq_pmic_volt[2] = MT_CPUVOLT_REG_2;
+        mt_cpufreq_pmic_volt[3] = MT_CPUVOLT_REG_3;
+        mt_cpufreq_pmic_volt[4] = MT_CPUVOLT_REG_4;
     }
     else if((g_cpufreq_get_ptp_level >= 1) && (g_cpufreq_get_ptp_level <= 5))
     {
@@ -1350,9 +1388,9 @@ void mt_cpufreq_return_default_DVS_by_ptpod(void)
         mt_cpufreq_pmic_volt[4] = 0x18;
     }
 	
-    mt65xx_reg_sync_writel(0x38, PMIC_WRAP_DVFS_WDATA5); // 1.05V VCORE
-    mt65xx_reg_sync_writel(0x28, PMIC_WRAP_DVFS_WDATA6); // 0.95V VCORE
-    mt65xx_reg_sync_writel(0x18, PMIC_WRAP_DVFS_WDATA7); // 0.85V VCORE
+    mt65xx_reg_sync_writel(MT_CPUVOLT_REG_5, PMIC_WRAP_DVFS_WDATA5); // 1.05V VCORE
+    mt65xx_reg_sync_writel(MT_CPUVOLT_REG_6, PMIC_WRAP_DVFS_WDATA6); // 0.95V VCORE
+    mt65xx_reg_sync_writel(MT_CPUVOLT_REG_7, PMIC_WRAP_DVFS_WDATA7); // 0.85V VCORE
     
     xlog_printk(ANDROID_LOG_INFO, "Power/DVFS", "mt_cpufreq return default DVS by ptpod\n");
 }
@@ -1700,70 +1738,8 @@ static int mt_cpufreq_pdrv_probe(struct platform_device *pdev)
     mt65xx_reg_sync_writel(0x026C, PMIC_WRAP_DVFS_ADR6);
     mt65xx_reg_sync_writel(0x026C, PMIC_WRAP_DVFS_ADR7);
 
-    if(g_cpufreq_get_ptp_level == 0)
-    {
-        mt65xx_reg_sync_writel(0x50, PMIC_WRAP_DVFS_WDATA0); // 1.20V VPROC
-        mt65xx_reg_sync_writel(0x48, PMIC_WRAP_DVFS_WDATA1); // 1.15V VPROC
-        mt65xx_reg_sync_writel(0x38, PMIC_WRAP_DVFS_WDATA2); // 1.05V VPROC
-        mt65xx_reg_sync_writel(0x28, PMIC_WRAP_DVFS_WDATA3); // 0.95V VPROC
-        mt65xx_reg_sync_writel(0x18, PMIC_WRAP_DVFS_WDATA4); // 0.85V VPROC
-
-        /* For PTP-OD */
-        mt_cpufreq_pmic_volt[0] = 0x50;
-        mt_cpufreq_pmic_volt[1] = 0x48;
-        mt_cpufreq_pmic_volt[2] = 0x38;
-        mt_cpufreq_pmic_volt[3] = 0x28;
-        mt_cpufreq_pmic_volt[4] = 0x18;
-    }
-    else if((g_cpufreq_get_ptp_level >= 1) && (g_cpufreq_get_ptp_level <= 5))
-    {
-        mt65xx_reg_sync_writel(0x58, PMIC_WRAP_DVFS_WDATA0); // 1.25V VPROC
-        mt65xx_reg_sync_writel(0x50, PMIC_WRAP_DVFS_WDATA1); // 1.20V VPROC
-        mt65xx_reg_sync_writel(0x48, PMIC_WRAP_DVFS_WDATA2); // 1.15V VPROC
-        mt65xx_reg_sync_writel(0x38, PMIC_WRAP_DVFS_WDATA3); // 1.05V VPROC
-        mt65xx_reg_sync_writel(0x28, PMIC_WRAP_DVFS_WDATA4); // 0.95V VPROC
-
-        /* For PTP-OD */
-        mt_cpufreq_pmic_volt[0] = 0x58;
-        mt_cpufreq_pmic_volt[1] = 0x50;
-        mt_cpufreq_pmic_volt[2] = 0x48;
-        mt_cpufreq_pmic_volt[3] = 0x38;
-        mt_cpufreq_pmic_volt[4] = 0x28;
-    }
-    else if(g_cpufreq_get_ptp_level == 9)
-    {
-        mt65xx_reg_sync_writel(0x50, PMIC_WRAP_DVFS_WDATA0); // 1.20V VPROC (Efuse = 9, 1GHz/1.2V)
-        mt65xx_reg_sync_writel(0x38, PMIC_WRAP_DVFS_WDATA1); // 1.05V VPROC
-        mt65xx_reg_sync_writel(0x28, PMIC_WRAP_DVFS_WDATA2); // 0.95V VPROC
-        mt65xx_reg_sync_writel(0x38, PMIC_WRAP_DVFS_WDATA3); // 1.05V VPROC
-        mt65xx_reg_sync_writel(0x28, PMIC_WRAP_DVFS_WDATA4); // 0.95V VPROC
-
-        /* For PTP-OD */
-        mt_cpufreq_pmic_volt[0] = 0x50;
-        mt_cpufreq_pmic_volt[1] = 0x38;
-        mt_cpufreq_pmic_volt[2] = 0x28;
-        mt_cpufreq_pmic_volt[3] = 0x38;
-        mt_cpufreq_pmic_volt[4] = 0x28;
-    }
-    else
-    {
-        mt65xx_reg_sync_writel(0x50, PMIC_WRAP_DVFS_WDATA0); // 1.20V VPROC
-        mt65xx_reg_sync_writel(0x48, PMIC_WRAP_DVFS_WDATA1); // 1.15V VPROC
-        mt65xx_reg_sync_writel(0x38, PMIC_WRAP_DVFS_WDATA2); // 1.05V VPROC
-        mt65xx_reg_sync_writel(0x28, PMIC_WRAP_DVFS_WDATA3); // 0.95V VPROC
-        mt65xx_reg_sync_writel(0x18, PMIC_WRAP_DVFS_WDATA4); // 0.85V VPROC
-
-        /* For PTP-OD */
-        mt_cpufreq_pmic_volt[0] = 0x50;
-        mt_cpufreq_pmic_volt[1] = 0x48;
-        mt_cpufreq_pmic_volt[2] = 0x38;
-        mt_cpufreq_pmic_volt[3] = 0x28;
-        mt_cpufreq_pmic_volt[4] = 0x18;
-    }
-	
-    mt65xx_reg_sync_writel(0x38, PMIC_WRAP_DVFS_WDATA5); // 1.05V VCORE
-    mt65xx_reg_sync_writel(0x28, PMIC_WRAP_DVFS_WDATA6); // 0.95V VCORE
-    mt65xx_reg_sync_writel(0x18, PMIC_WRAP_DVFS_WDATA7); // 0.85V VCORE
+    /* set default values */
+    mt_cpufreq_return_default_DVS_by_ptpod();
 
     /* MT6320 DVS down software solution. */
     #ifdef CPU_DVS_DOWN_SW_SOL
