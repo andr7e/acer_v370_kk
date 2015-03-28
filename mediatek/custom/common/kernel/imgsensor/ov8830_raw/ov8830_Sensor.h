@@ -155,7 +155,7 @@ typedef struct _sensor_data_struct
 
 
 /************OTP Feature*********************/
-//#define OV8830_USE_OTP
+#define OV8830_USE_OTP
 #if defined(OV8830_USE_OTP)
 
 struct ov8830_otp_struct
