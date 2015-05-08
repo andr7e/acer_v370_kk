@@ -374,7 +374,10 @@ if(currSensorName && (0 == strcmp(SENSOR_DRVNAME_S5K4E1GA_MIPI_RAW,currSensorNam
     }//
 
 }
-else if(currSensorName && ((0 == strcmp(SENSOR_DRVNAME_OV8825_MIPI_RAW,currSensorName))||(0 == strcmp(SENSOR_DRVNAME_OV8830_RAW,currSensorName))))  //zhaoshaopeng for sanglaishi and other 4e1 20120524
+else if(currSensorName && 
+((0 == strcmp(SENSOR_DRVNAME_OV8825_MIPI_RAW,currSensorName))
+||(0 == strcmp(SENSOR_DRVNAME_OV8830_RAW,currSensorName)) 
+||(0 == strcmp(SENSOR_DRVNAME_OV8835_MIPI_RAW,currSensorName))))  //zhaoshaopeng for sanglaishi and other 4e1 20120524
 {
     //power ON
     if (On) {

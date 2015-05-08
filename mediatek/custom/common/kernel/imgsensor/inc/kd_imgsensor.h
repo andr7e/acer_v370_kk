@@ -212,6 +212,7 @@
 #define AR0833_SENSOR_ID                        0x4B03
 #define IMX105_SENSOR_ID                        0x0105
 #define OV8830_SENSOR_ID			  0x8830
+#define OV8835MIPI_SENSOR_ID			  0x8835
 #define OV9726_SENSOR_ID                          0x9726
 #define OV9726MIPI_SENSOR_ID                          0x9726
 #define OV9760MIPI_SENSOR_ID                          0x9760
@@ -276,6 +277,7 @@
 #define SENSOR_DRVNAME_MT9T113_MIPI_YUV    "mt9t113mipiyuv"
 #define SENSOR_DRVNAME_IMX105_MIPI_RAW   "imx105mipiraw"
 #define SENSOR_DRVNAME_OV8830_RAW   	       "ov8830"
+#define SENSOR_DRVNAME_OV8835_MIPI_RAW   	       "ov8835mipiraw"
 #define SENSOR_DRVNAME_0V9726_RAW		"ov9726raw"
 #define SENSOR_DRVNAME_OV9726_MIPI_RAW		"ov9726mipiraw"
 #define SENSOR_DRVNAME_OV9760_MIPI_RAW		"ov9760mipiraw"
