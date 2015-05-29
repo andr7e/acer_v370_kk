@@ -1,0 +1,3 @@
+post-build=acer/c11_ww_gen1/C11:4.4.2/KOT49H/1411648186:user/release-keys
+post-timestamp=1411648279
+pre-device=C11
