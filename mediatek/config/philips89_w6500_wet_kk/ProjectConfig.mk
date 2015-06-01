@@ -52,7 +52,7 @@ CUSTOM_HAL_EEPROM=dummy_eeprom
 CUSTOM_HAL_FLASHLIGHT=constant_flashlight
 
 # User space image sensor driver. Define  project used all image sensors. The value is combination of CUSTOM_HAL_MAIN_IMGSENSOR, CUSTOM_HAL_MAIN_BACKUP_IMGSENSOR, CUSTOM_HAL_SUB_IMGSENSOR, and CUSTOM_HAL_SUB_BACKUP_IMGSENSOR
-CUSTOM_HAL_IMGSENSOR= ov8825_mipi_raw_2lane gc2035_yuv 
+CUSTOM_HAL_IMGSENSOR= ov8825_mipi_raw_2lane s5k8aayx_mipi_yuv 
 
 # = CUSTOM_HAL_MAIN_LENS +CUSTOM_HAL_MAIN_BACKUP_LENS + CUSTOM_HAL_SUB_LENS + CUSTOM_HAL_SUB_BACKUP_LENS
 CUSTOM_HAL_LENS= ov8825af dummy_lens
@@ -69,7 +69,7 @@ CUSTOM_HAL_MAIN_IMGSENSOR= ov8825_mipi_raw_2lane
 CUSTOM_HAL_MAIN_LENS= ov8825af
 
 # M-sensor hal layer library including daemon
-CUSTOM_HAL_MSENSORLIB= st480 mmc328x akm8975 ami304 yamaha530 mag3110 akmd8963 bmm050
+CUSTOM_HAL_MSENSORLIB= st480 mmc328x akm8975 ami304 yamaha530 mag3110 akmd8963 bmm050 lsm303md
 
 # sensor hal layer common part
 CUSTOM_HAL_SENSORS=sensor
@@ -79,16 +79,16 @@ CUSTOM_HAL_SUB_BACKUP_IMGSENSOR=
 CUSTOM_HAL_SUB_BACKUP_LENS= dummy_lens
 
 # User space driver: Sub camera (front camera )used sensor related tuning, setting and calibration information. Value is used sub sensor name.
-CUSTOM_HAL_SUB_IMGSENSOR= gc2035_yuv
+CUSTOM_HAL_SUB_IMGSENSOR= s5k8aayx_mipi_yuv
 
 # lens driver config for video telephony camera
 CUSTOM_HAL_SUB_LENS= dummy_lens
 
 # accelerometer sensor to detect accelerometer from x y z axis.
-CUSTOM_KERNEL_ACCELEROMETER= kxtik1004_auto  KXTJ2_1009_auto
+CUSTOM_KERNEL_ACCELEROMETER= lsm303d
 
 # ALSPS sensor driverto detect ambint light and the object is close or far awary from device
-CUSTOM_KERNEL_ALSPS= ap3216c
+CUSTOM_KERNEL_ALSPS= stk3x1x
 
 # Pressure sensor driver to detect pressure
 CUSTOM_KERNEL_BAROMETER=
@@ -116,7 +116,7 @@ CUSTOM_KERNEL_FLASHLIGHT=constant_flashlight
 CUSTOM_KERNEL_HEADSET= accdet
 
 # Kernel space image sensor driver. Define  project used all image sensors .The value is combination of CUSTOM_KERNEL_MAIN_IMGSENSOR, CUSTOM_KERNEL_MAIN_BACKUP_IMGSENSOR, CUSTOM_KERNEL_SUB_IMGSENSOR, and CUSTOM_KERNEL_SUB_BACKUP_IMGSENSOR
-CUSTOM_KERNEL_IMGSENSOR= ov8825_mipi_raw_2lane gc2035_yuv 
+CUSTOM_KERNEL_IMGSENSOR= ov8825_mipi_raw_2lane s5k8aayx_mipi_yuv 
 
 # key pad driver to report key event
 CUSTOM_KERNEL_KPD= kpd
@@ -126,7 +126,7 @@ CUSTOM_KERNEL_LEDS= mt65xx
 
 # same as CUSTOM_HAL_LENS
 CUSTOM_KERNEL_LENS= ov8825af dummy_lens
-CUSTOM_KERNEL_MAGNETOMETER = akm8963
+CUSTOM_KERNEL_MAGNETOMETER = lsm303m
 CUSTOM_KERNEL_MAIN2_BACKUP_IMGSENSOR=
 CUSTOM_KERNEL_MAIN2_IMGSENSOR=
 
@@ -154,7 +154,7 @@ CUSTOM_KERNEL_SUB_BACKUP_IMGSENSOR=
 CUSTOM_KERNEL_SUB_BACKUP_LENS= dummy_lens
 
 # Kernel space image sensor driver:Sub camera (front camera) used sensor driver.Value is used sub sensor name.
-CUSTOM_KERNEL_SUB_IMGSENSOR= gc2035_yuv
+CUSTOM_KERNEL_SUB_IMGSENSOR= s5k8aayx_mipi_yuv
 
 # lens driver config for video telephony camera
 CUSTOM_KERNEL_SUB_LENS= dummy_lens
