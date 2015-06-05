@@ -52,10 +52,10 @@ CUSTOM_HAL_EEPROM=dummy_eeprom
 CUSTOM_HAL_FLASHLIGHT=constant_flashlight
 
 # User space image sensor driver. Define  project used all image sensors. The value is combination of CUSTOM_HAL_MAIN_IMGSENSOR, CUSTOM_HAL_MAIN_BACKUP_IMGSENSOR, CUSTOM_HAL_SUB_IMGSENSOR, and CUSTOM_HAL_SUB_BACKUP_IMGSENSOR
-CUSTOM_HAL_IMGSENSOR= ov8825_mipi_raw_2lane gc2035_yuv 
+CUSTOM_HAL_IMGSENSOR= ov5647_mipi_raw gc2035_yuv 
 
 # = CUSTOM_HAL_MAIN_LENS +CUSTOM_HAL_MAIN_BACKUP_LENS + CUSTOM_HAL_SUB_LENS + CUSTOM_HAL_SUB_BACKUP_LENS
-CUSTOM_HAL_LENS= ov8825af dummy_lens
+CUSTOM_HAL_LENS= fm50af dummy_lens
 CUSTOM_HAL_MAIN2_IMGSENSOR=
 CUSTOM_HAL_MAIN_BACKUP_IMGSENSOR=
 
@@ -63,10 +63,10 @@ CUSTOM_HAL_MAIN_BACKUP_IMGSENSOR=
 CUSTOM_HAL_MAIN_BACKUP_LENS= dummy_lens
 
 # User space image sensor  driver: Main camera (rear camera) used sensor related tuning, setting and calibration information.Value is used main sensor name.
-CUSTOM_HAL_MAIN_IMGSENSOR= ov8825_mipi_raw_2lane
+CUSTOM_HAL_MAIN_IMGSENSOR= ov5647_mipi_raw
 
 # lens driver config for main camera
-CUSTOM_HAL_MAIN_LENS= ov8825af
+CUSTOM_HAL_MAIN_LENS= fm50af
 
 # M-sensor hal layer library including daemon
 CUSTOM_HAL_MSENSORLIB= st480 mmc328x akm8975 ami304 yamaha530 mag3110 akmd8963 bmm050
@@ -116,7 +116,7 @@ CUSTOM_KERNEL_FLASHLIGHT=constant_flashlight
 CUSTOM_KERNEL_HEADSET= accdet
 
 # Kernel space image sensor driver. Define  project used all image sensors .The value is combination of CUSTOM_KERNEL_MAIN_IMGSENSOR, CUSTOM_KERNEL_MAIN_BACKUP_IMGSENSOR, CUSTOM_KERNEL_SUB_IMGSENSOR, and CUSTOM_KERNEL_SUB_BACKUP_IMGSENSOR
-CUSTOM_KERNEL_IMGSENSOR= ov8825_mipi_raw_2lane gc2035_yuv 
+CUSTOM_KERNEL_IMGSENSOR= ov5647_mipi_raw gc2035_yuv 
 
 # key pad driver to report key event
 CUSTOM_KERNEL_KPD= kpd
@@ -125,7 +125,7 @@ CUSTOM_KERNEL_KPD= kpd
 CUSTOM_KERNEL_LEDS= mt65xx
 
 # same as CUSTOM_HAL_LENS
-CUSTOM_KERNEL_LENS= ov8825af dummy_lens
+CUSTOM_KERNEL_LENS= fm50af dummy_lens
 CUSTOM_KERNEL_MAGNETOMETER = akm8963
 CUSTOM_KERNEL_MAIN2_BACKUP_IMGSENSOR=
 CUSTOM_KERNEL_MAIN2_IMGSENSOR=
@@ -137,10 +137,10 @@ CUSTOM_KERNEL_MAIN_BACKUP_IMGSENSOR=
 CUSTOM_KERNEL_MAIN_BACKUP_LENS= dummy_lens
 
 # Kernel space image sensor driver:Main camera (rear camera) used sensor driver.Value is used main sensor name.
-CUSTOM_KERNEL_MAIN_IMGSENSOR= ov8825_mipi_raw_2lane
+CUSTOM_KERNEL_MAIN_IMGSENSOR= ov5647_mipi_raw
 
 # lens driver config for main camera
-CUSTOM_KERNEL_MAIN_LENS= ov8825af
+CUSTOM_KERNEL_MAIN_LENS= fm50af
 
 # RTC driver customization
 CUSTOM_KERNEL_RTC= rtc

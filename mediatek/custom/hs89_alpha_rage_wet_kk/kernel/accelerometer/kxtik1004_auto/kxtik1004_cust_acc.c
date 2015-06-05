@@ -51,7 +51,7 @@ int kxtik1004_cust_acc_power(struct acc_hw *hw, unsigned int on, char* devname)
 /*---------------------------------------------------------------------------*/
 static struct acc_hw kxtik1004_cust_acc_hw = {
     .i2c_num = 3,
-    .direction = 6,    
+    .direction = 4,    
     .power_id = MT65XX_POWER_LDO_VGP5,  /*!< LDO is not used */
     .power_vol= VOL_2800,        /*!< LDO is not used */
     .firlen = 16,                   /*!< don't enable low pass fileter */
