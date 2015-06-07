@@ -73,6 +73,7 @@ then
    echo "acer89_v370_wet_kk"
    echo "fly89_iq446_wet_kk"
    echo "philips89_w6500_wet_kk"
+   echo "hs89_alpha_rage_wet_kk"
 else
    build_kernel "$1"
 fi
