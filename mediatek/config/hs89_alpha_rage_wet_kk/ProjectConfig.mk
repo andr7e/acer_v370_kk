@@ -52,7 +52,7 @@ CUSTOM_HAL_EEPROM=dummy_eeprom
 CUSTOM_HAL_FLASHLIGHT=constant_flashlight
 
 # User space image sensor driver. Define  project used all image sensors. The value is combination of CUSTOM_HAL_MAIN_IMGSENSOR, CUSTOM_HAL_MAIN_BACKUP_IMGSENSOR, CUSTOM_HAL_SUB_IMGSENSOR, and CUSTOM_HAL_SUB_BACKUP_IMGSENSOR
-CUSTOM_HAL_IMGSENSOR= ov5647_mipi_raw gc2035_yuv 
+CUSTOM_HAL_IMGSENSOR= ov5647_mipi_raw gc0329_yuv 
 
 # = CUSTOM_HAL_MAIN_LENS +CUSTOM_HAL_MAIN_BACKUP_LENS + CUSTOM_HAL_SUB_LENS + CUSTOM_HAL_SUB_BACKUP_LENS
 CUSTOM_HAL_LENS= fm50af dummy_lens
@@ -79,7 +79,7 @@ CUSTOM_HAL_SUB_BACKUP_IMGSENSOR=
 CUSTOM_HAL_SUB_BACKUP_LENS= dummy_lens
 
 # User space driver: Sub camera (front camera )used sensor related tuning, setting and calibration information. Value is used sub sensor name.
-CUSTOM_HAL_SUB_IMGSENSOR= gc2035_yuv
+CUSTOM_HAL_SUB_IMGSENSOR= gc0329_yuv
 
 # lens driver config for video telephony camera
 CUSTOM_HAL_SUB_LENS= dummy_lens
@@ -116,7 +116,7 @@ CUSTOM_KERNEL_FLASHLIGHT=constant_flashlight
 CUSTOM_KERNEL_HEADSET= accdet
 
 # Kernel space image sensor driver. Define  project used all image sensors .The value is combination of CUSTOM_KERNEL_MAIN_IMGSENSOR, CUSTOM_KERNEL_MAIN_BACKUP_IMGSENSOR, CUSTOM_KERNEL_SUB_IMGSENSOR, and CUSTOM_KERNEL_SUB_BACKUP_IMGSENSOR
-CUSTOM_KERNEL_IMGSENSOR= ov5647_mipi_raw gc2035_yuv 
+CUSTOM_KERNEL_IMGSENSOR= ov5647_mipi_raw gc0329_yuv 
 
 # key pad driver to report key event
 CUSTOM_KERNEL_KPD= kpd
@@ -154,7 +154,7 @@ CUSTOM_KERNEL_SUB_BACKUP_IMGSENSOR=
 CUSTOM_KERNEL_SUB_BACKUP_LENS= dummy_lens
 
 # Kernel space image sensor driver:Sub camera (front camera) used sensor driver.Value is used sub sensor name.
-CUSTOM_KERNEL_SUB_IMGSENSOR= gc2035_yuv
+CUSTOM_KERNEL_SUB_IMGSENSOR= gc0329_yuv
 
 # lens driver config for video telephony camera
 CUSTOM_KERNEL_SUB_LENS= dummy_lens
