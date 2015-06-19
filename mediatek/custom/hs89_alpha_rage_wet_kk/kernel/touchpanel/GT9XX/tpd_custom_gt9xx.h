@@ -39,14 +39,13 @@
 
 /* Pre-defined definition */
 
-#define TPD_KEY_COUNT   4
-#define key_1           60,850              //auto define  
-#define key_2           180,850
-#define key_3           300,850
-#define key_4           420,850
+#define TPD_KEY_COUNT   3
+#define key_1           100,1000              //auto define  
+#define key_2           280,1000
+#define key_3           460,1000
 
-#define TPD_KEYS        {KEY_BACK, KEY_HOME, KEY_MENU, KEY_SEARCH}
-#define TPD_KEYS_DIM    {{key_1,50,30},{key_2,50,30},{key_3,50,30},{key_4,50,30}}
+#define TPD_KEYS        {KEY_MENU, KEY_HOMEPAGE, KEY_BACK}
+#define TPD_KEYS_DIM    {{key_1,50,100},{key_2,50,100},{key_3,50,100}}
 
 struct goodix_ts_data
 {
@@ -107,7 +106,7 @@ extern s32 gtp_i2c_read_dbl_check(struct i2c_client *client, u16 addr, u8 *rxbuf
 #define GTP_GESTURE_WAKEUP    0 
 
 //#define TPD_PROXIMITY
-//#define TPD_HAVE_BUTTON               //report key as coordinate,Vibration feedback
+#define TPD_HAVE_BUTTON               //report key as coordinate,Vibration feedback
 //#define TPD_WARP_X
 //#define TPD_WARP_Y
 
@@ -276,7 +275,8 @@ a sample config, send this config should cause the chip cannot work normally*/
 
 //STEP_4(optional):If this project have touch key,Set touch key config.
 #if GTP_HAVE_TOUCH_KEY
-#define GTP_KEY_TAB	 {KEY_BACK, KEY_HOMEPAGE, KEY_MENU}
+#define GTP_KEY_TAB  {KEY_MENU, KEY_HOMEPAGE, KEY_BACK}
+#define GTP_KEY_MAP_ARRAY {{key_1},{key_2},{key_3}}
 #endif
 
 //***************************PART3:OTHER define*********************************
