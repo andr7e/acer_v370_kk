@@ -483,7 +483,7 @@ static void lcm_resume(void)
 {
 //	esdSwitch = 1;
 	lcm_init ();
-	push_table(lcm_sleep_out_setting, sizeof(lcm_sleep_out_setting) / sizeof(struct LCM_setting_table), 1);
+	//push_table(lcm_sleep_out_setting, sizeof(lcm_sleep_out_setting) / sizeof(struct LCM_setting_table), 1);
 }
 
 #if defined(BUILD_UBOOT) || defined(BUILD_LK)
