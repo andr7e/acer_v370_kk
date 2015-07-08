@@ -32,6 +32,7 @@ build_kernel()
 
    cd "$mtktools_path"
    ./repack.pl -boot "$projectKernelName" boot.img-ramdisk "$projectDataName/boot.img"
+   #./repack.pl -boot "$projectKernelName" boot.img-ramdisk-cm12 "$projectDataName-cm12/boot.img"
 
    cd "$projectDataName"
    zip -r out .
