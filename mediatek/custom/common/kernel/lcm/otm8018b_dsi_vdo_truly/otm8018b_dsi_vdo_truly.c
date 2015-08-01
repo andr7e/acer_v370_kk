@@ -482,8 +482,8 @@ static unsigned int check_display_normal(void)
 static void lcm_resume(void)
 {
 //	esdSwitch = 1;
-//	lcm_init ();
-	push_table(lcm_sleep_out_setting, sizeof(lcm_sleep_out_setting) / sizeof(struct LCM_setting_table), 1);
+	lcm_init ();
+	//push_table(lcm_sleep_out_setting, sizeof(lcm_sleep_out_setting) / sizeof(struct LCM_setting_table), 1);
 }
 
 #if defined(BUILD_UBOOT) || defined(BUILD_LK)
@@ -557,7 +557,7 @@ static unsigned int lcm_compare_id(void)
 }
 
 
-LCM_DRIVER otm8018b_dsi_vdo_lcm_drv = 
+LCM_DRIVER otm8018b_dsi_vdo_truly_lcm_drv = 
 {
     .name			= "otm8018b_fwvga_dsi_vdo_boe",
 	.set_util_funcs = lcm_set_util_funcs,

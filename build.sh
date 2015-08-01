@@ -32,11 +32,12 @@ build_kernel()
 
    cd "$mtktools_path"
    ./repack.pl -boot "$projectKernelName" boot.img-ramdisk "$projectDataName/boot.img"
-   #./repack.pl -boot "$projectKernelName" boot.img-ramdisk-cm12 "$projectDataName-cm12/boot.img"
+   ./repack.pl -boot "$projectKernelName" boot.img-ramdisk-cm12 "$projectDataName-cm12/boot.img"
+   #./repack.pl -boot "$projectKernelName" boot.img-ramdisk-cm12 "$projectDataName-cm12/boot-cm11.img"
 
    cd "$projectDataName"
    zip -r out .
-   mv "$projectDataName/out.zip" "$source_path/$projectName-kernel3.4.67KK.zip"
+   mv "$projectDataName/out.zip" "$source_path/build/$projectName-kernel3.4.67KK.zip"
 }
 
 repack_recovery()
