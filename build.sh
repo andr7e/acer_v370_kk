@@ -42,32 +42,25 @@ build_kernel()
 
 repack_recovery()
 {
-   echo  "repacking cwm..."
-   rm "$dest_cwm_path/recovery.img"
-   cd $mtktools_path
-   ./repack.pl -recovery boot.img-kernel.img recovery.img-ramdisk-cwm "$dest_cwm_path/recovery.img"
-   cd $dest_cwm_path
-   zip -r recovery .
+   projectName="$1";
+   type="$2";
 
-   dest_twrp_path="$mtktools_path/twrp_recovery"
-   echo  "repacking twrp..."
-   rm "$dest_twrp_path/recovery.img"
+   echo "$projectName";
+
+   projectKernelName="boot.img-kernel-$projectName.img"
+   projectDataName="$mtktools_path/$projectName"
+
+   echo  "repacking $type..."
+   dest_path="$source_path/build/recovery"
    cd $mtktools_path
-   ./repack.pl -recovery boot.img-kernel.img recovery.img-ramdisk-twrp "$dest_twrp_path/recovery.img"
-   cd $dest_twrp_path
+   ./repack.pl -recovery "$projectKernelName" "recovery.img-ramdisk-$type" "$dest_path/recovery.img"
+   cd $dest_path
    zip -r recovery .
+   mv "$dest_path/recovery.zip" "$source_path/build/$projectName-$type-recovery.zip"
+   rm "$dest_path/recovery.img"
 }
 
 recovery_param="recovery"
-
-
-: 'if [ "$1" = "$recovery_param" ];
-then
-   repack_recovery
-else
-   build_kernel
-fi'
-
 
 if [ "$1" = "list" ];
 then
@@ -77,5 +70,10 @@ then
    echo "philips89_w6500_wet_kk"
    echo "hs89_alpha_rage_wet_kk"
 else
-   build_kernel "$1"
+   if [ "$2" = "$recovery_param" ];
+   then
+       repack_recovery "$1" "twrp"
+   else
+       build_kernel "$1"
+   fi
 fi
