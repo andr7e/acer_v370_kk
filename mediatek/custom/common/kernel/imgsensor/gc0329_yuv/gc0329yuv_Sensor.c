@@ -158,6 +158,35 @@ void GC0329_Set_Shutter(kal_uint16 iShutter)
 {
 } /* Set_GC0329_Shutter */
 
+static void GC0329_set_mirror_flip(kal_uint8 image_mirror)
+{
+	kal_uint8 GC2035_HV_Mirror;
+	switch (image_mirror)
+	{
+		case IMAGE_NORMAL:
+		GC2035_HV_Mirror = 0x14;
+		break;
+		
+		case IMAGE_H_MIRROR:
+		GC2035_HV_Mirror = 0x15;
+		break;
+		
+		case IMAGE_V_MIRROR:
+		GC2035_HV_Mirror = 0x16;
+		break;
+		
+		case IMAGE_HV_MIRROR:
+		GC2035_HV_Mirror = 0x17;
+		break;
+		
+		default:
+		break;
+	}
+	
+	GC0329_write_cmos_sensor(0x17, GC2035_HV_Mirror);
+	
+	msleep(150);
+}
 
 /*************************************************************************
  * FUNCTION
@@ -1418,6 +1447,8 @@ UINT32 GC0329Preview(MSDK_SENSOR_EXPOSURE_WINDOW_STRUCT *image_window,
     image_window->GrabStartY= IMAGE_SENSOR_VGA_GRAB_LINES;
     image_window->ExposureWindowWidth = IMAGE_SENSOR_PV_WIDTH;
     image_window->ExposureWindowHeight =IMAGE_SENSOR_PV_HEIGHT;
+    
+    //GC0329_set_mirror_flip(IMAGE_V_MIRROR);
 
     // copy sensor_config_data
     memcpy(&GC0329SensorConfigData, sensor_config_data, sizeof(MSDK_SENSOR_CONFIG_STRUCT));
@@ -1450,6 +1481,8 @@ UINT32 GC0329Capture(MSDK_SENSOR_EXPOSURE_WINDOW_STRUCT *image_window,
     image_window->GrabStartY = IMAGE_SENSOR_VGA_GRAB_LINES;
     image_window->ExposureWindowWidth= IMAGE_SENSOR_FULL_WIDTH;
     image_window->ExposureWindowHeight = IMAGE_SENSOR_FULL_HEIGHT;
+    
+    //GC0329_set_mirror_flip(IMAGE_V_MIRROR);
 
     // copy sensor_config_data
     memcpy(&GC0329SensorConfigData, sensor_config_data, sizeof(MSDK_SENSOR_CONFIG_STRUCT));
