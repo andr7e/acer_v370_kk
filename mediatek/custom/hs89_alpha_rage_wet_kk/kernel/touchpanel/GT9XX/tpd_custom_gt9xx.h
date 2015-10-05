@@ -85,7 +85,7 @@ extern s32 gtp_i2c_read_dbl_check(struct i2c_client *client, u16 addr, u8 *rxbuf
 
 //***************************PART1:ON/OFF define*******************************
 #define GTP_CUSTOM_CFG        0
-#define GTP_DRIVER_SEND_CFG   1       //driver send config to TP on intilization (for no config built in TP flash)
+#define GTP_DRIVER_SEND_CFG   0 //1       //driver send config to TP on intilization (for no config built in TP flash)
 #define GTP_HAVE_TOUCH_KEY    1
 #define GTP_POWER_CTRL_SLEEP  0       //turn off power on suspend
 #define GTP_AUTO_UPDATE       0       //update FW to TP FLASH
