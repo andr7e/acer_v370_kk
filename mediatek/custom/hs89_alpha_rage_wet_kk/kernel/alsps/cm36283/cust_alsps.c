@@ -11,8 +11,8 @@ static struct alsps_hw cust_alsps_hw = {
     //.i2c_addr   = {0x0C, 0x48, 0x78, 0x00},
     .als_level  = { 0,  1,  1,   7,  15,  15,  100, 1000, 2000,  3000,  6000, 10000, 14000, 18000, 20000},
     .als_value  = {40, 40, 90,  90, 160, 160,  225,  320,  640,  1280,  1280,  2600,  2600, 2600,  10240, 10240},
-    .ps_threshold_high = 53,
-    .ps_threshold_low = 46,
+    .ps_threshold_high = 0x19, //53,
+    .ps_threshold_low =  0x12, //46,
 };
 struct alsps_hw *get_cust_alsps_hw(void) {
     return &cust_alsps_hw;
