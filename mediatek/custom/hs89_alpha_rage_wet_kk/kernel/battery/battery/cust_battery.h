@@ -49,6 +49,7 @@ typedef struct{
 /* Battery Voltage and Percentage Mapping Table */
 VBAT_TO_PERCENT Batt_VoltToPercent_Table[] = {
 	/*BattVolt,BattPercent*/
+/*
 	{3400,0},
 	{3610,10},
 	{3659,20},
@@ -60,10 +61,34 @@ VBAT_TO_PERCENT Batt_VoltToPercent_Table[] = {
 	{3900,80},
 	{4001,90},
 	{4189,100},
+
+	{3440,0},
+	{3629,10},
+	{3675,20},
+	{3698,30},
+	{3719,40},
+	{3750,50},
+	{3792,60},
+	{3854,70},
+	{3922,80},
+	{4022,90},
+	{4110,100},
+*/
+	{3424,0},
+	{3629,10},
+	{3675,20},
+	{3700,30},
+	{3720,40},
+	{3750,50},
+	{3797,60},
+	{3854,70},
+	{3922,80},
+	{4031,90},
+	{4167,100},
 };
 
 /* Precise Tunning */
-#define BATTERY_AVERAGE_SIZE 	15  //30
+#define BATTERY_AVERAGE_SIZE 	60 //15  //30
 //#define BATTERY_AVERAGE_SIZE   3
 
 /* Common setting */

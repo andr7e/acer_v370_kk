@@ -370,7 +370,7 @@ int g_HW_stop_charging = 0;
 
 int CHARGING_FULL_CURRENT=220;    // mA 
 
-int gForceADCsolution=0;
+int gForceADCsolution=1; //0;
 
 int gSyncPercentage=0;
 
