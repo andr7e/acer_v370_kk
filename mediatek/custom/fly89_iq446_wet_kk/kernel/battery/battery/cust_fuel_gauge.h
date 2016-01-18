@@ -21,8 +21,8 @@
 #endif
 
 //BEGIN<20120117>wangyanhui
-#define Q_MAX_POS_50	2056   //2524  
-#define Q_MAX_POS_25	2056   //2524  
+#define Q_MAX_POS_50	2106   //2524  
+#define Q_MAX_POS_25	2103   //2524  
 #define Q_MAX_POS_0		1636   //2524  
 #define Q_MAX_NEG_10	1632   //2524   
 

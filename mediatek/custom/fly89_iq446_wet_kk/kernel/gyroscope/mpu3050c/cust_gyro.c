@@ -52,7 +52,7 @@ int cust_gyro_power(struct gyro_hw *hw, unsigned int on, char* devname)
 static struct gyro_hw cust_gyro_hw = {
     .addr = 0xd0,
     .i2c_num = 3,
-    .direction = 7,
+    .direction = 0,
     .power_id = MT65XX_POWER_NONE,  /*!< LDO is not used */
     .power_vol= VOL_DEFAULT,        /*!< LDO is not used */
     .firlen = 16,                   /*!< don't enable low pass fileter */
