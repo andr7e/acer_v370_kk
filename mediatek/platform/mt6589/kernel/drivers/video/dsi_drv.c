@@ -184,7 +184,8 @@ static long int get_current_time_us(void)
 #endif
 static void lcm_mdelay(UINT32 ms)
 {
-    udelay(1000 * ms);
+    //udelay(1000 * ms);
+    mdelay(ms);
 }
 void DSI_Enable_Log(bool enable)
 {
@@ -2267,6 +2268,7 @@ void DSI_set_cmdq_V3(LCM_setting_table_V3 *para_tbl, unsigned int size, unsigned
 		if (data_id == REGFLAG_ESCAPE_ID && cmd == REGFLAG_DELAY_MS_V3)
 		{
 			udelay(1000*count);
+
 			DISP_LOG_PRINT(ANDROID_LOG_INFO, "DSI", "DSI_set_cmdq_V3[%d]. Delay %d (ms) \n", index, count);
 
 			continue;

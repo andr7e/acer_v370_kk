@@ -1,9 +1,9 @@
 #script compile kernel by andr7e
 #setting build
 
-toolchain="$HOME/kernel_build/android-toolchain-eabi-4.9/bin/arm-linux-androideabi-"
+#toolchain="$HOME/kernel_build/android-toolchain-eabi-4.9/bin/arm-linux-androideabi-"
+toolchain="$HOME/kernel_build/android-toolchain-eabi-5.2/bin/arm-linux-androideabi-"
 source_path="$HOME/kernel_build/acer_v370_kk"
-#/home/doha/toolchain-4.6.3/bin/arm-linux-androideabi-
 
 # CCACHE
 export CCACHE_DIR="$HOME/.ccache"
