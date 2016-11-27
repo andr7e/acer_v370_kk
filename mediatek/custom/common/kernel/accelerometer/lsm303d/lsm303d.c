@@ -1,3 +1,4 @@
+
 /* LSM303D motion sensor driver
  *
  *
@@ -271,7 +272,7 @@ static int lsm303d_SetBWRate(struct i2c_client *client, u8 bwrate)
 
 	databuf[0] = LSM303D_REG_BW_RATE;   
 
-	mutex_lock(&lsm303d_mutex);
+//	mutex_lock(&lsm303d_mutex);
 	/**
 	
 	res = i2c_master_send(client, databuf, 0x1);
@@ -290,7 +291,7 @@ static int lsm303d_SetBWRate(struct i2c_client *client, u8 bwrate)
 		goto EXIT_ERR;
 	}
 	**/
-	GSE_LOG("recv data ");
+	GSE_LOG("recv data , bwrate=%d \n",bwrate);
 	//bwrate = ((ODR_ACC_MASK & bwrate) | ((~ODR_ACC_MASK) & databuf[0]) | LSM303D_ACC_ODR_ENABLE);
 		
 	bwrate = ((ODR_ACC_MASK & bwrate) | LSM303D_ACC_ODR_ENABLE);
@@ -301,19 +302,19 @@ static int lsm303d_SetBWRate(struct i2c_client *client, u8 bwrate)
 
 	res = i2c_master_send(client, databuf, 0x2);
 
-	GSE_LOG("send rate");
+	GSE_LOG("send rate,res=%d \n",res);
 
 	if(res <=0)
 	{
 		goto EXIT_ERR;
 	
 	}
-	mutex_unlock(&lsm303d_mutex);
+//	mutex_unlock(&lsm303d_mutex);
 	
 	return LSM303D_SUCCESS; 
 
 	EXIT_ERR:
-	mutex_unlock(&lsm303d_mutex);
+//	mutex_unlock(&lsm303d_mutex);
 	return LSM303D_ERR_I2C;
 	
 }
@@ -1596,8 +1597,10 @@ int gsensor_operate(void* self, uint32_t command, void* buff_in, int size_in,
 				{
 					sample_delay = LSM303D_ACC_ODR50;
 				}
+				mutex_lock(&lsm303d_mutex);
+				err = lsm303d_SetBWRate(priv->client, sample_delay);	
+				mutex_unlock(&lsm303d_mutex);
 				
-				err = lsm303d_SetBWRate(priv->client, sample_delay);
 				if(err != LSM303D_SUCCESS ) //0x2C->BW=100Hz
 				{
 					GSE_ERR("Set delay parameter error!\n");
@@ -1629,6 +1632,7 @@ int gsensor_operate(void* self, uint32_t command, void* buff_in, int size_in,
 			{
 				value = *(int *)buff_in;
 				
+				mutex_lock(&lsm303d_mutex);
 				if(value == 0) 
 				{
 					err = lsm303d_SetPowerMode( priv->client, 0);
@@ -1639,6 +1643,8 @@ int gsensor_operate(void* self, uint32_t command, void* buff_in, int size_in,
 					err = lsm303d_SetPowerMode( priv->client, 1);
 					GSE_LOG("Gsensor device true!\n");
 				}
+				
+				mutex_unlock(&lsm303d_mutex);
 			}
 			break;
 
@@ -1651,13 +1657,21 @@ int gsensor_operate(void* self, uint32_t command, void* buff_in, int size_in,
 			else
 			{
 				gsensor_data = (hwm_sensor_data *)buff_out;
+				
+				mutex_lock(&lsm303d_mutex);
 				err = lsm303d_ReadSensorData(priv->client, buff, LSM303D_BUFSIZE);
+				
+				mutex_unlock(&lsm303d_mutex);
 				if(!err)
 				{
 				   sscanf(buff, "%x %x %x", &gsensor_data->values[0], 
 					   &gsensor_data->values[1], &gsensor_data->values[2]);				
 				   gsensor_data->status = SENSOR_STATUS_ACCURACY_MEDIUM;				
 				   gsensor_data->value_divide = 1000;
+				}
+				else
+				{
+					GSE_ERR("lsm303d_ReadSensorData failed,  err=%d \n",err);
 				}
 			}
 			break;
@@ -2148,6 +2162,7 @@ static int __init lsm303d_init(void)
 	
 	struct acc_hw *hw = get_cust_acc_hw();
 	GSE_LOG("%s: i2c_number=%d\n", __func__,hw->i2c_num); 
+	GSE_ERR(" -2 %s: i2c_number=%d\n", __func__,hw->i2c_num); 
 		
 	i2c_register_board_info(hw->i2c_num, &i2c_lsm303d, 1);
 	if(platform_driver_register(&lsm303d_gsensor_driver))

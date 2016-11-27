@@ -323,7 +323,7 @@ MTK_AUTOIP_SUPPORT=no
 MTK_AUTORAMA_SUPPORT=yes
 
 # one load to support different accelerometer sensor
-MTK_AUTO_DETECT_ACCELEROMETER=yes
+MTK_AUTO_DETECT_ACCELEROMETER=no
 MTK_AUTO_DETECT_ALSPS=no
 
 # one load to support different magnetometer sensor

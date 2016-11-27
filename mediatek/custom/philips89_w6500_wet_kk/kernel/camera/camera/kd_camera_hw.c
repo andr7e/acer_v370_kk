@@ -71,6 +71,8 @@
 #define PK_XLOG_INFO(fmt, args...)
 #endif
 
+#define PHILIPS_W6500
+
 
 #define SENSOR_GC2035_YUV_PWR_ON() do {                                                                                   \
                 if(TRUE != hwPowerOn(CAMERA_POWER_VCAM_D2, VOL_1800,mode_name)) {                                           \
@@ -133,15 +135,17 @@
                     PK_DBG("[CAMERA SENSOR] Fail to enable digital power:CAMERA_POWER_VCAM_D2\n");                          \
                     goto _kdCISModulePowerOn_exit_;                                                                         \
                 }                                                                                                           \
-                if(TRUE != hwPowerOn(CAMERA_POWER_VCAM_A, VOL_2800,mode_name)) {                                            \
+               mdelay(1);\
+               if(TRUE != hwPowerOn(CAMERA_POWER_VCAM_A, VOL_2800,mode_name)) {                                            \
                     PK_DBG("[CAMERA SENSOR] Fail to enable analog power:CAMERA_POWER_VCAM_A\n");                            \
                     goto _kdCISModulePowerOn_exit_;                                                                         \
                 }                                                                                                           \
-                if(TRUE != hwPowerOn(CAMERA_POWER_VCAM_D, VOL_1500,mode_name)) {                                            \
+               mdelay(1);\
+                /*if(TRUE != hwPowerOn(CAMERA_POWER_VCAM_D, VOL_1500,mode_name)) {                                            \
                     PK_DBG("[CAMERA SENSOR] Fail to enable digital power:CAMERA_POWER_VCAM_D\n");                           \
                     goto _kdCISModulePowerOn_exit_;                                                                         \
                 }                                                                                                           \
-                if(TRUE != hwPowerOn(CAMERA_POWER_VCAM_A2, VOL_2800,mode_name)) {                                            \
+                */if(TRUE != hwPowerOn(CAMERA_POWER_VCAM_A2, VOL_2800,mode_name)) {                                            \
                     PK_DBG("[CAMERA SENSOR] Fail to enable digital power:CAMERA_POWER_VCAM_A2\n");                           \
                     goto _kdCISModulePowerOn_exit_;                                                                         \
                 }                                                                                                           \
@@ -169,6 +173,45 @@
                 }                                                                                                           \
                 mdelay(5);                                                                                                  \                
               }while (0)
+
+#if defined(PHILIPS_ROYAL2)
+#define S5K8AAYX_MIPI_YUV_PWR_ON() do {  \
+                if(TRUE != hwPowerOn(CAMERA_POWER_VCAM_D2, VOL_1800,mode_name)) {                                           \
+                    PK_DBG("[CAMERA SENSOR] Fail to enable digital power:CAMERA_POWER_VCAM_D2\n");                          \
+                    goto _kdCISModulePowerOn_exit_;                                                                         \
+                }                                                                                                           \
+                mdelay(10);                                                                                                 \
+                if(TRUE != hwPowerOn(CAMERA_POWER_VCAM_A, VOL_2800,mode_name)) {                                            \
+                    PK_DBG("[CAMERA SENSOR] Fail to enable analog power:CAMERA_POWER_VCAM_A\n");                            \
+                    goto _kdCISModulePowerOn_exit_;                                                                         \
+                }                                                                                                           \
+                mdelay(2);                                                                                                  \
+                if(TRUE != hwPowerOn(CAMERA_POWER_VCAM_D, VOL_1200,mode_name)) {                                            \
+                    PK_DBG("[CAMERA SENSOR] Fail to enable digital power:CAMERA_POWER_VCAM_D\n");                           \
+                    goto _kdCISModulePowerOn_exit_;                                                                         \
+                }                                                                                                           \
+                mdelay(10/*punk, 5->100*/);                                                                                                  \
+            }while (0)
+#else
+#define S5K8AAYX_MIPI_YUV_PWR_ON() do {  \
+                if(TRUE != hwPowerOn(CAMERA_POWER_VCAM_D2, VOL_1800,mode_name)) {                                           \
+                    PK_DBG("[CAMERA SENSOR] Fail to enable digital power:CAMERA_POWER_VCAM_D2\n");                          \
+                    goto _kdCISModulePowerOn_exit_;                                                                         \
+                }                                                                                                           \
+                mdelay(10);                                                                                                 \
+                if(TRUE != hwPowerOn(CAMERA_POWER_VCAM_A, VOL_2800,mode_name)) {                                            \
+                    PK_DBG("[CAMERA SENSOR] Fail to enable analog power:CAMERA_POWER_VCAM_A\n");                            \
+                    goto _kdCISModulePowerOn_exit_;                                                                         \
+                }                                                                                                           \
+                mdelay(2);                                                                                                  \
+                if(TRUE != hwPowerOn(CAMERA_POWER_VCAM_D, VOL_1800,mode_name)) {                                            \
+                    PK_DBG("[CAMERA SENSOR] Fail to enable digital power:CAMERA_POWER_VCAM_D\n");                           \
+                    goto _kdCISModulePowerOn_exit_;                                                                         \
+                }                                                                                                           \
+                mdelay(10/*punk, 5->100*/);                                                                                                  \
+            }while (0)
+#endif
+
 #define SENSOR_A5142_RAW_PWR_ON() do {	\
 		if(TRUE != hwPowerOn(CAMERA_POWER_VCAM_D2, VOL_1800,mode_name)) {                                           \
                     PK_DBG("[CAMERA SENSOR] Fail to enable digital power:CAMERA_POWER_VCAM_D2\n");                          \
@@ -188,6 +231,42 @@
                 }                                                                                                           \
                 mdelay(5);                                                                                                  \
             }while (0)
+#if defined(FOR1T_C05)
+#define SENSOR_GC0329_YUV_PWR_ON() do {  \
+		if(TRUE != hwPowerOn(CAMERA_POWER_VCAM_D, VOL_1500,mode_name)) {                                            \
+                    PK_DBG("[CAMERA SENSOR] Fail to enable digital power:CAMERA_POWER_VCAM_D\n");                           \
+                    goto _kdCISModulePowerOn_exit_;                                                                         \
+                }                                                                                 \
+                mdelay(1);                                                                                                 \
+                if(TRUE != hwPowerOn(CAMERA_POWER_VCAM_A, VOL_2800,mode_name)) {                                            \
+                    PK_DBG("[CAMERA SENSOR] Fail to enable analog power:CAMERA_POWER_VCAM_A\n");                            \
+                    goto _kdCISModulePowerOn_exit_;                                                                         \
+                }                                                                                                           \
+                mdelay(2);                                                                                                  \
+                 if(TRUE != hwPowerOn(CAMERA_POWER_VCAM_D2, VOL_1800,mode_name)) {                                           \
+                    PK_DBG("[CAMERA SENSOR] Fail to enable digital power:CAMERA_POWER_VCAM_D2\n");                          \
+                    goto _kdCISModulePowerOn_exit_;                                                                         \
+                } mdelay(5);                                                                                                  \
+                if(TRUE != hwPowerOn(CAMERA_POWER_VCAM_A2, VOL_2800,mode_name)) {                                            \
+                    PK_DBG("[CAMERA SENSOR] Fail to enable digital power:CAMERA_POWER_VCAM_A2\n");                           \
+                    goto _kdCISModulePowerOn_exit_;                                                                         \
+                }                                                                                                           \
+                mdelay(5);                                                                                                  \                
+              }while (0)
+#else
+#define SENSOR_GC0329_YUV_PWR_ON() do {									\
+			if(TRUE != hwPowerOn(CAMERA_POWER_VCAM_D2, VOL_1800,mode_name)){										\
+							PK_DBG("[CAMERA SENSOR] Fail to enable digital power:CAMERA_POWER_VCAM_D2\n");						\
+							goto _kdCISModulePowerOn_exit_;												\
+						}																							\
+			mdelay(10);																							\
+			if(TRUE != hwPowerOn(CAMERA_POWER_VCAM_A, VOL_2800,mode_name)){											\
+							PK_DBG("[CAMERA SENSOR] Fail to enable analog power:CAMERA_POWER_VCAM_A\n");							\
+							goto _kdCISModulePowerOn_exit_;																			\
+						}																										\
+			mdelay(5);																							\
+			}while (0)
+#endif
 #define SENSOR_PWR_OFF() do {\
 		if(TRUE != hwPowerDown(CAMERA_POWER_VCAM_A,mode_name)) {\
 		PK_DBG("[CAMERA SENSOR] Fail to disable CAMERA_POWER_VCAM_A power\n");\
@@ -223,8 +302,13 @@ u32 pinSet[3][8] = {
                         GPIO_OUT_ZERO,                  /* OFF state */
                      GPIO_CAMERA_CMPDN_PIN,
                         GPIO_CAMERA_CMPDN_PIN_M_GPIO,
+#if defined(PAD1)
+	                    GPIO_OUT_ZERO,
+						GPIO_OUT_ONE,
+#else
                         GPIO_OUT_ONE,
                         GPIO_OUT_ZERO,
+#endif
                     },
                     //for sub sensor
                     {GPIO_CAMERA_CMRST1_PIN,
@@ -233,8 +317,14 @@ u32 pinSet[3][8] = {
                         GPIO_OUT_ZERO,
                      GPIO_CAMERA_CMPDN1_PIN,
                         GPIO_CAMERA_CMPDN1_PIN_M_GPIO,
+#if defined(PHILIPS_W6500) || defined(PHILIPS_ROYAL2)
+						//atlasNew
+                        GPIO_OUT_ONE,
+                        GPIO_OUT_ZERO,
+#else
                         GPIO_OUT_ZERO,
                         GPIO_OUT_ONE,
+#endif
                     },
                     //for main_2 sensor
                     {GPIO_CAMERA_2_CMRST_PIN,
@@ -389,7 +479,7 @@ u32 pinSet[3][8] = {
 			mdelay(5);
 		}   
 	}
-	else if(currSensorName && (0 == strcmp(SENSOR_DRVNAME_OV5647MIPI_RAW,currSensorName)))
+	else if(currSensorName && ((0 == strcmp(SENSOR_DRVNAME_OV5647MIPI_RAW,currSensorName))||(0 == strcmp(SENSOR_DRVNAME_OV5647_RAW,currSensorName))))
 	{      
 
 		if (GPIO_CAMERA_INVALID != pinSet[pinSetIdx][IDX_PS_CMRST]) {
@@ -518,8 +608,68 @@ u32 pinSet[3][8] = {
 	}
 	else if (currSensorName && (0 == strcmp(SENSOR_DRVNAME_S5K8AAYX_MIPI_YUV,currSensorName)))
 	{
-
+	//	printk("S5K8AAYX_MIPI_YUV_PWR_ON -1, pin idx =%d\n",pinSetIdx);
+		S5K8AAYX_MIPI_YUV_PWR_ON();
+		mdelay(20); 
+			//disable inactive sensor
+		if (GPIO_CAMERA_INVALID != pinSet[1-pinSetIdx][IDX_PS_CMRST]) {
+			if(mt_set_gpio_mode(pinSet[1-pinSetIdx][IDX_PS_CMRST],pinSet[1-pinSetIdx][IDX_PS_CMRST+IDX_PS_MODE])){PK_DBG("[CAMERA SENSOR] set gpio mode failed!! \n");}
+			if(mt_set_gpio_mode(pinSet[1-pinSetIdx][IDX_PS_CMPDN],pinSet[1-pinSetIdx][IDX_PS_CMPDN+IDX_PS_MODE])){PK_DBG("[CAMERA LENS] set gpio mode failed!! \n");}
+			if(mt_set_gpio_dir(pinSet[1-pinSetIdx][IDX_PS_CMRST],GPIO_DIR_OUT)){PK_DBG("[CAMERA SENSOR] set gpio dir failed!! \n");}
+			if(mt_set_gpio_dir(pinSet[1-pinSetIdx][IDX_PS_CMPDN],GPIO_DIR_OUT)){PK_DBG("[CAMERA LENS] set gpio dir failed!! \n");}
+			if(mt_set_gpio_out(pinSet[1-pinSetIdx][IDX_PS_CMRST],pinSet[1-pinSetIdx][IDX_PS_CMRST+IDX_PS_OFF])){PK_DBG("[CAMERA SENSOR] set gpio failed!! \n");} //low == reset sensor
+			mdelay(5);
+			if(mt_set_gpio_out(pinSet[1-pinSetIdx][IDX_PS_CMPDN],pinSet[1-pinSetIdx][IDX_PS_CMPDN+IDX_PS_OFF])){PK_DBG("[CAMERA LENS] set gpio failed!! \n");} //high == power down lens module
+			mdelay(5);
+		}        
+		//enable active sensor
+	        //RST pin
+		if (GPIO_CAMERA_INVALID != pinSet[pinSetIdx][IDX_PS_CMRST]) {
+			//PDN pin
+			if(mt_set_gpio_mode(pinSet[pinSetIdx][IDX_PS_CMPDN],pinSet[pinSetIdx][IDX_PS_CMPDN+IDX_PS_MODE])){PK_DBG("[CAMERA LENS] set gpio mode failed!! \n");}
+			if(mt_set_gpio_dir(pinSet[pinSetIdx][IDX_PS_CMPDN],GPIO_DIR_OUT)){PK_DBG("[CAMERA LENS] set gpio dir failed!! \n");}
+			if(mt_set_gpio_out(pinSet[pinSetIdx][IDX_PS_CMPDN],pinSet[pinSetIdx][IDX_PS_CMPDN+IDX_PS_ON])){PK_DBG("[CAMERA LENS] set gpio failed!! \n");}
+			mdelay(30);
+			if(mt_set_gpio_mode(pinSet[pinSetIdx][IDX_PS_CMRST],pinSet[pinSetIdx][IDX_PS_CMRST+IDX_PS_MODE])){PK_DBG("[CAMERA SENSOR] set gpio mode failed!! \n");}
+			if(mt_set_gpio_dir(pinSet[pinSetIdx][IDX_PS_CMRST],GPIO_DIR_OUT)){PK_DBG("[CAMERA SENSOR] set gpio dir failed!! \n");}
+			if(mt_set_gpio_out(pinSet[pinSetIdx][IDX_PS_CMRST],pinSet[pinSetIdx][IDX_PS_CMRST+IDX_PS_ON])){PK_DBG("[CAMERA SENSOR] set gpio failed!! \n");}
+		}	
+		mdelay(10);//punk 10->100 
 	}
+	else if (currSensorName && (0 == strcmp(SENSOR_DRVNAME_GC0329_YUV,currSensorName))) 
+	{
+		printk("SENSOR_G0329_YUV_PWR_ON ");
+		SENSOR_GC0329_YUV_PWR_ON();  
+		//disable inactive sensor
+		if (GPIO_CAMERA_INVALID != pinSet[1-pinSetIdx][IDX_PS_CMRST]) {
+			if(mt_set_gpio_mode(pinSet[1-pinSetIdx][IDX_PS_CMRST],pinSet[1-pinSetIdx][IDX_PS_CMRST+IDX_PS_MODE])){PK_DBG("[CAMERA SENSOR] set gpio mode failed!! \n");}
+			if(mt_set_gpio_mode(pinSet[1-pinSetIdx][IDX_PS_CMPDN],pinSet[1-pinSetIdx][IDX_PS_CMPDN+IDX_PS_MODE])){PK_DBG("[CAMERA LENS] set gpio mode failed!! \n");}
+			if(mt_set_gpio_dir(pinSet[1-pinSetIdx][IDX_PS_CMRST],GPIO_DIR_OUT)){PK_DBG("[CAMERA SENSOR] set gpio dir failed!! \n");}
+			if(mt_set_gpio_dir(pinSet[1-pinSetIdx][IDX_PS_CMPDN],GPIO_DIR_OUT)){PK_DBG("[CAMERA LENS] set gpio dir failed!! \n");}
+			if(mt_set_gpio_out(pinSet[1-pinSetIdx][IDX_PS_CMRST],pinSet[1-pinSetIdx][IDX_PS_CMRST+IDX_PS_OFF])){PK_DBG("[CAMERA SENSOR] set gpio failed!! \n");} //low == reset sensor
+			mdelay(5);
+			if(mt_set_gpio_out(pinSet[1-pinSetIdx][IDX_PS_CMPDN],pinSet[1-pinSetIdx][IDX_PS_CMPDN+IDX_PS_OFF])){PK_DBG("[CAMERA LENS] set gpio failed!! \n");} //high == power down lens module
+			mdelay(5);
+		}        
+
+		//enable active sensor
+		//RST pin
+		if (GPIO_CAMERA_INVALID != pinSet[pinSetIdx][IDX_PS_CMRST]) {
+			//PDN pin
+			if(mt_set_gpio_mode(pinSet[pinSetIdx][IDX_PS_CMPDN],pinSet[pinSetIdx][IDX_PS_CMPDN+IDX_PS_MODE])){PK_DBG("[CAMERA LENS] set gpio mode failed!! \n");}
+			if(mt_set_gpio_dir(pinSet[pinSetIdx][IDX_PS_CMPDN],GPIO_DIR_OUT)){PK_DBG("[CAMERA LENS] set gpio dir failed!! \n");}
+			if(mt_set_gpio_out(pinSet[pinSetIdx][IDX_PS_CMPDN],pinSet[pinSetIdx][IDX_PS_CMPDN+IDX_PS_ON])){PK_DBG("[CAMERA LENS] set gpio failed!! \n");}
+			mdelay(10);
+
+			if(mt_set_gpio_mode(pinSet[pinSetIdx][IDX_PS_CMRST],pinSet[pinSetIdx][IDX_PS_CMRST+IDX_PS_MODE])){PK_DBG("[CAMERA SENSOR] set gpio mode failed!! \n");}
+			if(mt_set_gpio_dir(pinSet[pinSetIdx][IDX_PS_CMRST],GPIO_DIR_OUT)){PK_DBG("[CAMERA SENSOR] set gpio dir failed!! \n");}
+			if(mt_set_gpio_out(pinSet[pinSetIdx][IDX_PS_CMRST],pinSet[pinSetIdx][IDX_PS_CMRST+IDX_PS_OFF])){PK_DBG("[CAMERA SENSOR] set gpio failed!! \n");}
+			mdelay(10);
+			if(mt_set_gpio_out(pinSet[pinSetIdx][IDX_PS_CMRST],pinSet[pinSetIdx][IDX_PS_CMRST+IDX_PS_ON])){PK_DBG("[CAMERA SENSOR] set gpio failed!! \n");}
+			mdelay(5);
+		}   
+	}
+
 	else
 	{
 
@@ -618,6 +768,20 @@ u32 pinSet[3][8] = {
 		else if(currSensorName && (0 == strcmp(SENSOR_DRVNAME_S5K8AAYX_MIPI_YUV,currSensorName)))
 		{
 
+		//	printk("S5K8AAYX_MIPI_YUV PWR_off -1, pin idx =%d\n",pinSetIdx);
+			  if (GPIO_CAMERA_INVALID != pinSet[pinSetIdx][IDX_PS_CMRST]) {
+	  			if(mt_set_gpio_mode(pinSet[pinSetIdx][IDX_PS_CMRST],pinSet[pinSetIdx][IDX_PS_CMRST+IDX_PS_MODE])){PK_DBG("[CAMERA SENSOR] set gpio mode failed!! \n");}
+	  			if(mt_set_gpio_dir(pinSet[pinSetIdx][IDX_PS_CMRST],GPIO_DIR_OUT)){PK_DBG("[CAMERA SENSOR] set gpio dir failed!! \n");}
+	  			if(mt_set_gpio_out(pinSet[pinSetIdx][IDX_PS_CMRST],pinSet[pinSetIdx][IDX_PS_CMRST+IDX_PS_OFF])){PK_DBG("[CAMERA SENSOR] set gpio failed!! \n");}
+	  			mdelay(5);
+	  			if(mt_set_gpio_mode(pinSet[pinSetIdx][IDX_PS_CMPDN],pinSet[pinSetIdx][IDX_PS_CMPDN+IDX_PS_MODE])){PK_DBG("[CAMERA LENS] set gpio mode failed!! \n");}
+	  			if(mt_set_gpio_dir(pinSet[pinSetIdx][IDX_PS_CMPDN],GPIO_DIR_OUT)){PK_DBG("[CAMERA LENS] set gpio dir failed!! \n");}
+	  			if(mt_set_gpio_out(pinSet[pinSetIdx][IDX_PS_CMPDN],pinSet[pinSetIdx][IDX_PS_CMPDN+IDX_PS_OFF])){PK_DBG("[CAMERA LENS] set gpio failed!! \n");}
+	  			mdelay(5);
+			PK_DBG("kdCISModulePower--off get in---SENSOR_DRVNAME_S5K5CAGX_YUV \n");
+			SENSOR_PWR_OFF();
+
+			}
 		}
 		else
 		{
